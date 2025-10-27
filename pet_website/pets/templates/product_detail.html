@@ -1,0 +1,1179 @@
+
+ {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+ <style>
+    
+ .containered {
+      display: flex;
+      gap: 30px;
+      padding: 40px;
+      flex-wrap: wrap;
+    }
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.left { width: 100%; max-width: 480px; }
+
+/* big image */
+.big-image {
+  width: 100%;
+  height: auto;
+  display:block;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+/* thumbnail row */
+.thumbnail-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* viewport hides overflow so exactly visibleCount thumbs show */
+.thumb-viewport {
+  overflow: hidden;
+  /* width is set dynamically by JS for exact control */
+  flex: 0 0 auto;
+}
+
+/* thumbnails container will be translated */
+.thumbnails {
+  display: flex;
+  transition: transform 0.32s ease;
+  will-change: transform;
+}
+
+/* each thumb */
+.thumbnails img {
+  width: 74px;        /* base size - responsive if CSS scaled */
+  height: 74px;
+  margin-right: 10px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+/* active thumb */
+.thumbnails img.active {
+  border-color: #0066ff;
+}
+
+/* arrows */
+.arrow {
+  background: #f0f0f0;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.arrow:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* dots */
+.dots { margin-top: 10px; text-align:center; }
+.dots span {
+  display:inline-block; width:10px; height:10px; border-radius:50%;
+  margin:0 5px; background:#ddd; cursor:pointer;
+}
+.dots span.active { background:#0066ff; }
+
+.right {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  gap: 12px;             /* Space between each block */
+}
+
+.right h2 {
+  margin: 0 0 10px 0;
+  font-size: 22px;
+  line-height: 1.4;
+  font-weight: bold;
+}
+
+.right p {
+  margin: 0;
+  line-height: 1.1;
+  font-size: 15px;
+}
+
+.right ul {
+  margin: 0;
+  padding-left: 18px; /* indent bullets */
+  line-height: 1.5;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  color:#1c57f8;
+}
+
+    /* RIGHT SIDE */
+    .right {
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .right h2 {
+      margin-top: 0;
+    }
+
+    
+    .sizes button {
+      margin-right: 10px;
+      padding: 6px 14px;
+      border: 1px solid black;
+      border-radius: 5px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .sizes button.active {
+      background: #007bff;
+      color: #fff;
+    }
+
+    .quantity {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+    }
+
+    .quantity button {
+      width: 35px;
+      height: 35px;
+      font-size: 18px;
+      border: 1px solid #ddd;
+      background: #f7f7f7;
+      cursor: pointer;
+    }
+
+    .quantity input {
+      width: 50px;
+      text-align: center;
+      border: 1px solid #ddd;
+      margin: 0 5px;
+    }
+
+    .actions button {
+      padding: 12px 20px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .actions .cart {
+      background: #1c57f8;
+      color: white;
+      font-weight: bold;
+      border-radius: 20px;
+      width: 200px;
+    }
+.actions .cart:hover{
+    background-color: white;
+    color: black;
+    border: 1px solid #1c57f8;
+
+}
+    .actions .buy {
+      background: black;
+      color: white;
+      border-radius: 20px;
+      width: 150px;
+      font-weight: bold;
+    }
+.buy:hover{
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+
+}
+    /* MEDIA QUERY */
+    @media (max-width: 768px) {
+      .containered {
+        flex-direction: column;
+      }
+      .thumbnails img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+
+ .containersed {
+  display: flex;
+  min-height: 100vh; /* full height */
+}
+
+.left {
+  flex: 1;
+  padding: 40px;
+  background: #fff;
+}
+.left h3{
+    font-size: 16px;
+    font-weight: bold;
+}
+.right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.right img {
+  width: 100%;
+  height: 90vh;
+  object-fit: cover;
+}
+
+ 
+
+
+
+ .containersed {
+  display: flex;
+  min-height: 100vh; /* full height */
+}
+
+.left {
+  flex: 1;
+  padding: 40px;
+  background: #fff;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+
+.right img {
+  width: 100%;
+  height: 120vh;
+  object-fit: cover;
+}
+
+ 
+
+ .review-container {
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+    }
+
+    /* Star styles */
+    .stars span {
+      font-size: 25px;
+      cursor: pointer;
+      color: grey;
+      transition: color 0.3s;
+    }
+    .stars span.active {
+      color:yellow;
+    }
+
+    /* Static stars on left (non-clickable) */
+    .static-stars span {
+      font-size: 25px;
+      color: gray;
+      cursor: default;
+    }
+    /*
+.stars span {
+    font-size: 2rem;
+    cursor: pointer;
+    color: #ccc; 
+    transition: color 0.2s;
+  }*/
+  .stars span.active {
+    color: gold; /* yellow for active stars */
+  }
+    .submit-btn {
+      background-color:#1c57f8;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 8px 20px;
+    }
+.submit-btn:hover{
+    background-color: white;
+    color: black;
+    border: 1px solid #1c57f8;
+}
+    @media (max-width: 768px) {
+      .review-container {
+        flex-direction: column;
+      }
+    }
+ 
+
+.containersss {
+  display: flex;
+  gap: 30px;        /* space between banner & carousel */
+  align-items: flex-start;
+}
+
+/* banner */
+.banner {
+  flex: 0 0 25%;    /* dog image column is 30% */
+  text-align: center;
+}
+.dog-img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* products area */
+.products {
+  flex: 1 1 70%;
+  position: relative;   /* arrows positioned relative to this */
+  min-width: 0;         /* allow flex shrink */
+}
+
+/* viewport that hides overflow of sliding track */
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* sliding track */
+.carousel {
+  display: flex;
+  gap: 20px;                 /* gap between cards */
+  transition: transform 400ms ease;
+  will-change: transform;
+  padding-bottom: 6px;
+}
+
+/* exact 4 cards visible: calc takes total gap into account (3 gaps of 20px = 60px) */
+.product-card {
+  flex: 0 0 calc((100% - 60px) / 4); /* 4 cards, minus gaps */
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 6px 14px rgba(19,21,26,0.04);
+}
+
+/* product image */
+.product-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display:block;
+  margin-bottom: 8px;
+}
+
+/* title / stars / price */
+.title { font-weight: 700; font-size: 14px; margin: 6px 0; color:#222; }
+.stars { font-size: 16px; margin: 6px 0; line-height:1; }
+.star-filled { color: #FFD700; }  /* gold */
+.star-empty { color: #ccc; }      /* grey */
+.price { font-weight: 700; color: #111; margin-top:6px; }
+
+/* arrows (above cards) */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background:#1c57f8;     /* blue background */
+  color: #fff;             /* white icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  z-index: 999;            /* make sure it's above the cards */
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+  font-size: 20px;
+}
+
+/* arrow positions inside the products area so not clipped */
+.arrow.left { left: -10px; }
+.arrow.right { right: -10px; }
+
+/* hide with display:none; we toggle that from JS */
+.arrow[style*="display:none"] { display: none !important; }
+
+/* small screens responsiveness */
+@media (max-width: 900px) {
+  .banner { flex: 0 0 35%; }
+  .product-card { flex: 0 0 calc((100% - 40px) / 2); } /* 2 cards on medium screens */
+}
+@media (max-width: 520px) {
+  .container { flex-direction: column; gap: 16px; }
+  .banner { width: 100%; flex: none; }
+  .product-card { flex: 0 0 100%; }
+  .arrow { display: none; } /* hide arrows on tiny screens (you can enable touch swipe later) */
+}
+
+
+    </style>
+
+    </head>
+    <body>
+      <p><a href="{% url 'dog' %}" style="color: black;">Home/Dog/Turkey,Chickpea&Sweetpotato|Small Bread 2kg</a></p>
+<!----
+<div class="containered">
+  
+  <div class="left">
+    <img id="bigImage" src="{{ product.main_image.url }}" class="big-image" alt="Product">
+
+    <div class="thumbnail-wrapper">
+      <button class="arrow" id="leftArrow" disabled>&lt;</button>
+      <div class="thumbnails" id="thumbnailContainer">
+        {% for img in images %}
+          <img src="{{ img.url }}" {% if forloop.first %}class="active"{% endif %} onclick="changeImage({{ forloop.counter0 }})">
+        {% endfor %}
+      </div>
+      <button class="arrow" id="rightArrow">&gt;</button>
+    </div>
+
+    <div class="dots" id="dots">
+      {% for img in images %}
+        <span {% if forloop.first %}class="active"{% endif %} onclick="changeImage({{ forloop.counter0 }})"></span>
+      {% endfor %}
+    </div>
+  </div>-->
+
+
+
+
+
+<div class="containered">
+  <!----
+  <div class="left">
+    
+    <img id="bigImage" src="{{ product.main_image.url }}" class="big-image" alt="Product">
+
+   
+    <div class="thumbnail-wrapper">
+      <button class="arrow" id="leftArrow" onclick="scrollThumbnails(-1)" disabled>&lt;</button>
+      <div class="thumbnails" id="thumbnailContainer">
+        {% for img in images %}
+          <img src="{{ img.url }}" {% if forloop.first %}class="active"{% endif %} onclick="changeImage({{ forloop.counter0 }})">
+        {% endfor %}
+      </div>
+      <button class="arrow" id="rightArrow" onclick="scrollThumbnails(1)">&gt;</button>
+    </div>
+
+    
+    <div class="dots" id="dots">
+      {% for img in images %}
+        <span {% if forloop.first %}class="active"{% endif %} onclick="changeImage({{ forloop.counter0 }})"></span>
+      {% endfor %}
+    </div>
+  </div>--->
+
+  
+
+<div class="left">
+  <!-- Big image -->
+  <img id="bigImage" src="{{ product.main_image.url }}" class="big-image" alt="Product">
+
+  <!-- Thumbnail carousel -->
+  <div class="thumbnail-wrapper">
+    <button class="arrowsed" id="leftArrow" aria-label="Previous" disabled>
+        <span class="link-arrow">
+  <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Blue filled circle -->
+    <circle cx="17" cy="17" r="16" fill="#0066ff"></circle>
+    <!-- White arrow -->
+    <line x1="10" y1="17" x2="24" y2="17" stroke="white" stroke-width="2.5"></line>
+    <polyline points="16 11 24 17 16 23" stroke="white" stroke-width="2.5"></polyline>
+  </svg>
+</span>
+    </button>
+ <!-- optional dots -->
+  
+    <div class="thumb-viewport">
+      <div class="thumbnails" id="thumbnailContainer">
+        {% for img in images %}
+          <img
+            src="{{ img.url }}"
+            data-index="{{ forloop.counter0 }}" 
+            {% if forloop.first %}class="active"{% endif %}
+            onclick="onThumbClick({{ forloop.counter0 }})"
+            alt="thumb-{{ forloop.counter0 }}"
+          >
+        {% endfor %}
+      </div>
+    </div>
+
+    <button class="arrowsed" id="rightArrow" aria-label="Next"><span class="link-arrow">
+  <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Blue filled circle -->
+    <circle cx="17" cy="17" r="16" fill="#0066ff"></circle>
+    <!-- White arrow -->
+    <line x1="10" y1="17" x2="24" y2="17" stroke="white" stroke-width="2.5"></line>
+    <polyline points="16 11 24 17 16 23" stroke="white" stroke-width="2.5"></polyline>
+  </svg>
+</span></button>
+  </div>
+
+  <!-- optional dots -->
+  <div class="dots" id="dots">
+    {% for img in images %}
+      <span {% if forloop.first %}class="active"{% endif %} onclick="onThumbClick({{ forloop.counter0 }})"></span>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+  <!-- RIGHT (you can keep the same static content or fetch from another model later) -->
+  <div class="right">
+    <h2>Turkey, Chickpea & Sweet Potato | Small Breed 2Kg</h2>
+    <p><strong>Coupon code:</strong> 92921</p>
+    <p><strong>Brand:</strong> Zoe</p>
+    <p>
+      Quality sources of protein, including turkey and eggs, are at the foundation of this recipe. 
+      From “superfoods” like quinoa and berries to healthy fats and probiotics, Zoë dog food is created 
+      with carefully selected ingredients.
+    </p>
+    <ul>
+      <li>MADE IN CANADA</li>
+      <li>HEALTHY GRAINS: Quinoa, oats & barley</li>
+    </ul>
+    <p>Importer: Maple pets international pvt ltd</p>
+    <p>Importer Address-792,Dwarkapuri,Indore Mp</p>
+    <p>Per Gram Price -0.849</p>
+    <p>Manufactured by Omini Pet Nutrition BC Canada</p>
+    <p><strong></strong> <span class="price"> MRP:₹ 1,899.00</span> Inclusive of all taxes</p>
+
+
+    <p>Available Size</p>
+    <span>
+    <div class="sizes">
+      <button onclick="selectSize(this)">1kg</button>
+      <button  onclick="selectSize(this)">2kg</button>
+    </div>
+    </span>
+
+    <div class="quantity">
+      <button onclick="updateQty(-1)">-</button>
+      <input type="text" id="qty" value="1" readonly>
+      <button onclick="updateQty(1)">+</button>
+    </div>
+
+    <div class="actions">
+      <button class="cart">Add to cart</button>
+      <button class="buy  btn-buy" onclick="window.location.href='{% url 'buycart' %}'">Buy Now</button>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function updateQty(change) {
+    let qtyInput = document.getElementById("qty");
+    let currentValue = parseInt(qtyInput.value);
+
+    // Increase or decrease
+    let newValue = currentValue + change;
+
+    // prevent going below 1
+    if (newValue < 1) {
+      newValue = 1;
+    }
+
+    qtyInput.value = newValue;
+  }
+</script>
+
+<!----
+<script>
+  const images = [
+    "{% for img in images %}{{ img.url }}{% if not forloop.last %}","{% endif %}{% endfor %}"
+  ];
+
+  let currentIndex = 0;
+
+  function changeImage(index) {
+    currentIndex = index;
+    document.getElementById("bigImage").src = images[index];
+
+    document.querySelectorAll(".thumbnails img").forEach((img,i)=>{
+      img.classList.toggle("active", i===index);
+    });
+
+    document.querySelectorAll(".dots span").forEach((dot,i)=>{
+      dot.classList.toggle("active", i===index);
+    });
+  }
+</script>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const visibleCount = 4; // change this if you want different number of visible thumbnails
+  const thumbContainer = document.getElementById('thumbnailContainer');
+  const thumbs = Array.from(thumbContainer.querySelectorAll('img'));
+  const viewport = document.querySelector('.thumb-viewport');
+  const leftBtn = document.getElementById('leftArrow');
+  const rightBtn = document.getElementById('rightArrow');
+  const dots = Array.from(document.querySelectorAll('#dots span'));
+  const bigImage = document.getElementById('bigImage');
+
+  let startIndex = 0; // first visible thumbnail index
+  let total = thumbs.length;
+
+  if (total === 0) {
+    // no thumbs: disable arrows
+    leftBtn.disabled = rightBtn.disabled = true;
+    return;
+  }
+
+  // Build images array from thumbnails (keeps template simpler / robust)
+  const images = thumbs.map(t => t.src);
+
+  // compute thumb size (width + margin-right) and set viewport width for exactly visibleCount thumbnails
+  function setupViewport() {
+    // handle case where thumbs count < visibleCount
+    const firstThumb = thumbs[0];
+    const thumbStyle = getComputedStyle(firstThumb);
+    const thumbW = firstThumb.offsetWidth;
+    const marginRight = parseFloat(thumbStyle.marginRight || 0);
+
+    const usedVisible = Math.min(visibleCount, total);
+    const viewportWidth = usedVisible * thumbW + Math.max(0, usedVisible - 1) * marginRight;
+    viewport.style.width = viewportWidth + 'px';
+  }
+
+  // update arrow disabled state and dots
+  function updateControls() {
+    leftBtn.disabled = (startIndex === 0);
+    rightBtn.disabled = (startIndex >= Math.max(0, total - visibleCount));
+
+    // update active dot
+    dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+  }
+
+  // apply transform according to startIndex
+  function applyTranslate() {
+    if (thumbs.length === 0) return;
+    const firstThumb = thumbs[0];
+    const thumbStyle = getComputedStyle(firstThumb);
+    const moveStep = firstThumb.offsetWidth + parseFloat(thumbStyle.marginRight || 0);
+    const translateX = startIndex * moveStep;
+    thumbContainer.style.transform = `translateX(-${translateX}px)`;
+    updateControls();
+  }
+
+  // set currentIndex and update big image + active classes
+  let currentIndex = 0;
+  function changeImage(index) {
+    if (index < 0 || index >= images.length) return;
+    currentIndex = index;
+    bigImage.src = images[index];
+
+    // active thumb
+    thumbs.forEach((t, i) => t.classList.toggle('active', i === index));
+    // active dots
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+  }
+
+  // click handler exposed to inline onclick attribute
+  window.onThumbClick = function(index) {
+    // ensure clicked thumb is visible — auto scroll if needed
+    if (index < startIndex) {
+      startIndex = index;
+    } else if (index >= startIndex + visibleCount) {
+      startIndex = index - visibleCount + 1;
+    }
+    applyTranslate();
+    changeImage(index);
+  };
+
+  // scroll handler: direction -1 or +1; or 0 to just re-apply
+  window.scrollThumbnails = function(direction) {
+    if (direction === 0) { applyTranslate(); return; }
+    startIndex += direction;
+    const maxStart = Math.max(0, total - visibleCount);
+    if (startIndex < 0) startIndex = 0;
+    if (startIndex > maxStart) startIndex = maxStart;
+    applyTranslate();
+  };
+
+  // wire arrow buttons
+  leftBtn.addEventListener('click', () => window.scrollThumbnails(-1));
+  rightBtn.addEventListener('click', () => window.scrollThumbnails(1));
+
+  // wire dots to click (they already have inline onclicks in template - but just in case)
+  dots.forEach((dot, i) => dot.addEventListener('click', () => window.onThumbClick(i)));
+
+  // initial setup
+  setupViewport();
+  // show first image (if you want to start with product.main_image, set bigImage.src accordingly)
+  changeImage(0);
+
+  // If there are fewer thumbs than visibleCount, disable the arrows
+  if (total <= visibleCount) {
+    leftBtn.disabled = rightBtn.disabled = true;
+    // ensure no translate needed
+    thumbContainer.style.transform = 'translateX(0)';
+  } else {
+    updateControls();
+  }
+
+  // Recalculate if window resizes (keeps viewport correct for responsive changes)
+  window.addEventListener('resize', () => {
+    // recalc viewport and re-apply translate to keep selected visible
+    setupViewport();
+    applyTranslate();
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+<div class="containersed">
+  
+  <!-- Left Side -->
+  <div class="left">
+    <h2>Product Description</h2>
+
+    <h3>Fresh Dog Food<br>Small Breed Dog Food, Turkey, Chickpea & Sweet Potato</h3>
+    <p>Quality, Canadian sources of protein, including fresh turkey, turkey meal and chickpeas form the foundation of our recipe.</p>
+
+    <h3>Flaxseed, chia seed, salmon oil for healthy skin & coat</h3>
+    <p>This powerful combination of salmon oil, chia & flax ensures a diet rich in fatty acids to help your dog maintain a healthy skin & coat.</p>
+
+    <h3>Prebiotics & probiotics for a healthy digestive system</h3>
+    <p>Prebiotics & probiotics, along with ingredients rich in dietary fiber such as chickpeas, beans, oats and barley, help support a healthy digestive system.</p>
+
+    <h3>Rich in antioxidants to support a healthy immune system</h3>
+    <p>Berries and carrots, loaded with antioxidants and phytonutrients, along with vitamins & minerals help support a healthy immune system.</p>
+
+    <p><b>Zoe Small Breed Dog Food</b><br>
+    This dry dog food made with fresh deboned turkey is loaded with protein and helps maintain normal blood sugar level, and is loaded with antioxidants and minerals. Zoe believe in growing old with our pets, so our recipe is loaded with nutrients that help maintain a healthy life.</p>
+  </div>
+
+  <!-- Right Side -->
+  <div class="right">
+    {% if background %}
+      <img src="{{ background.image.url }}" alt="Dog Food Background">
+    {% else %}
+      <p>No background uploaded</p>
+    {% endif %}
+  </div>
+
+</div>
+
+
+
+
+ 
+<div class="container review-container">
+  <div class="row">
+    
+    <!-- Left Side -->
+    <div class="col-md-6 border-end">
+      <h3 style="font-weight: bold;">Customer Reviews</h3>
+
+      
+      <div class="static-stars mb-2" style="text-align: center;">
+        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+      </div>
+      <p style="text-align: center;">0 reviews</p>
+
+   
+
+
+
+    <!-- Rating Breakdown -->
+<div class="rating-breakdown">
+
+  <!-- 5 Stars -->
+  <div class="d-flex align-items-center mb-2">
+    <div class="stars me-2">
+      <span class="star active">★</span>
+      <span class="star active">★</span>
+      <span class="star active">★</span>
+      <span class="star active">★</span>
+      <span class="star active">★</span>
+    </div>
+    <div class="progress flex-grow-1">
+      <div class="progress-bar bg-warning" style="width: 70%"></div>
+    </div>
+  </div>
+
+  <!-- 4 Stars -->
+  <div class="d-flex align-items-center mb-2">
+    <div class="stars me-2">
+      <span class="star active">★</span>
+      <span class="star active">★</span>
+      <span class="star active">★</span>
+      <span class="star active">★</span>
+      <span class="star">☆</span>
+    </div>
+    <div class="progress flex-grow-1">
+      <div class="progress-bar bg-warning" style="width: 20%"></div>
+    </div>
+  </div>
+
+  <!-- 3 Stars -->
+  <div class="d-flex align-items-center mb-2">
+    <div class="stars me-2">
+      <span class="star active">★</span>
+      <span class="star active">★</span>
+      <span class="star active">★</span>
+      <span class="star">☆</span>
+      <span class="star">☆</span>
+    </div>
+    <div class="progress flex-grow-1">
+      <div class="progress-bar bg-warning" style="width: 7%"></div>
+    </div>
+  </div>
+
+  <!-- 2 Stars -->
+  <div class="d-flex align-items-center mb-2">
+    <div class="stars me-2">
+      <span class="star active">★</span>
+      <span class="star active">★</span>
+      <span class="star">☆</span>
+      <span class="star">☆</span>
+      <span class="star">☆</span>
+    </div>
+    <div class="progress flex-grow-1">
+      <div class="progress-bar bg-warning" style="width: 2%"></div>
+    </div>
+  </div>
+
+  <!-- 1 Star -->
+  <div class="d-flex align-items-center mb-2">
+    <div class="stars me-2">
+      <span class="star active">★</span>
+      <span class="star">☆</span>
+      <span class="star">☆</span>
+      <span class="star">☆</span>
+      <span class="star">☆</span>
+    </div>
+    <div class="progress flex-grow-1">
+      <div class="progress-bar bg-warning" style="width: 1%"></div>
+    </div>
+  </div>
+</div>
+    </div>
+
+
+
+    <!-- Right Side -->
+    <div class="col-md-6">
+      <h5><b>Be the first to review “Turkey, Chickpea & Sweet Potato | Small Breed 2Kg”</b></h5>
+      <p class="text-muted">Your email address will not be published. Required fields are marked <span class="text-danger">*</span></p>
+
+      <!-- Interactive Rating -->
+      <label>Your Rating <span class="text-danger">*</span></label>
+      <div class="stars mb-3" id="ratingStars">
+        <span data-index="1">★</span>
+        <span data-index="2">★</span>
+        <span data-index="3">★</span>
+        <span data-index="4">★</span>
+        <span data-index="5">★</span>
+      </div>
+
+      <!-- Review Form -->
+      <form>
+        <div class="mb-3">
+          <label>Your Review <span class="text-danger">*</span></label>
+          <textarea class="form-control" rows="3" required></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label>Your Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label>Your Email <span class="text-danger">*</span></label>
+          <input type="email" class="form-control" required>
+        </div>
+
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="saveInfo">
+          <label class="form-check-label" for="saveInfo">
+            Save my name, email, and website in this browser for the next time I comment.
+          </label>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+    </div>
+<script>
+// Bootstrap custom validation
+(() => {
+  const form = document.getElementById('reviewForm');
+
+  form.addEventListener('submit', (event) => {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.classList.add('was-validated');
+  });
+})();
+</script>
+
+  </div>
+</div>
+
+<script>
+  // Interactive star rating toggle (only on right side)
+  document.querySelectorAll("#ratingStars span").forEach(star => {
+    star.addEventListener("click", function() {
+      this.classList.toggle("active");
+    });
+  });
+</script>
+
+
+
+
+<!-----
+
+<div class="containersss">
+        <!-- Left Banner --
+       <div class="banner">
+           <div class="product-container">
+  {% for p in productsed %}
+    <div class="product-card">
+      <img src="{{ p.image.url }}" alt="{{ p.title }}">
+      <h4 class="product-title">{{ p.title }}</h4>
+
+      <!-- Star rating --
+      <div class="stars">
+        {% for i in "12345" %}
+          {% if forloop.counter <= p.rating %}
+            <span class="star filled">★</span>
+          {% else %}
+            <span class="star empty">★</span>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <p class="price">₹ {{ p.price }}</p>
+      <p class="quantity">{{ p.quantity }}</p>
+
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+  {% endfor %}
+</div>
+
+       </div>
+
+       
+
+
+
+
+      <div class="products" aria-label="product carousel">
+      <!-- Left arrow (hidden initially) --
+      <button id="arrow-left" class="arrow left" aria-label="previous" style="display:none">
+        &#10094;
+      </button>
+
+      <!-- viewport that clips the sliding area only --
+      <div class="carousel-viewport">
+        <div id="carousel" class="carousel">
+          {% for p in products %}
+            <div class="product-card">
+              <img src="{{ p.image.url }}" alt="{{ p.title }}">
+              <p class="title">{{ p.title }}</p>
+              <div class="stars">
+                {% for i in "12345" %}
+                  {% if forloop.counter <= p.rating %}
+                    <span class="star-filled">★</span>
+                  {% else %}
+                    <span class="star-empty">★</span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+              <p class="price">₹ {{ p.price }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Right arrow (visible initially) --
+      <button id="arrow-right" class="arrow right" aria-label="next">
+        &#10095;
+      </button>
+    </div>
+  </div>-->
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const carousel = document.getElementById('carousel');
+    const leftBtn = document.getElementById('arrow-left');
+    const rightBtn = document.getElementById('arrow-right');
+    const cards = carousel.querySelectorAll('.product-card');
+
+    const total = {{ products|length }};    // injected from Django
+    const visible = 4;                      // you asked for 4 visible cards
+    const step = 2;                         // jump 1–4 -> 3–6 (step=2)
+
+    if (!cards.length) {
+      leftBtn.style.display = rightBtn.style.display = 'none';
+      return;
+    }
+
+    let position = 0; // index of the first visible card (0-based)
+
+    function getGapPx() {
+      // flex gap (modern browsers)
+      const gap = getComputedStyle(carousel).gap;
+      return gap ? parseFloat(gap) : 0;
+    }
+
+    function computeShiftPx() {
+      // card width (including padding/border) + gap
+      const firstCard = cards[0];
+      const cardWidth = firstCard.getBoundingClientRect().width;
+      const gap = getGapPx();
+      return position * (cardWidth + gap);
+    }
+
+    function applyTransform() {
+      const shiftPx = computeShiftPx();
+      carousel.style.transform = `translateX(-${shiftPx}px)`;
+    }
+
+    function updateArrows() {
+      if (total <= visible) {
+        leftBtn.style.display = rightBtn.style.display = 'none';
+        return;
+      }
+      if (position === 0) {
+        // start: only show right arrow (to move forward)
+        rightBtn.style.display = 'flex';
+        leftBtn.style.display = 'none';
+      } else if (position >= total - visible) {
+        // end: only show left arrow (to go back)
+        rightBtn.style.display = 'none';
+        leftBtn.style.display = 'flex';
+      } else {
+        // middle (if any): show both (optional) — change to only one if you want
+        rightBtn.style.display = 'flex';
+        leftBtn.style.display = 'flex';
+      }
+    }
+
+    rightBtn.addEventListener('click', function () {
+      position = Math.min(position + step, total - visible);
+      applyTransform();
+      updateArrows();
+    });
+
+    leftBtn.addEventListener('click', function () {
+      position = Math.max(position - step, 0);
+      applyTransform();
+      updateArrows();
+    });
+
+    // Recompute on resize so cards stay aligned
+    window.addEventListener('resize', function () {
+      applyTransform();
+    });
+
+    // initial layout
+    updateArrows();
+    applyTransform();
+  });
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+    </body>
+</html>
+{% endblock %}

@@ -1,0 +1,340 @@
+ {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <style>
+  
+  .contact-block {
+            border: 2px solid black;
+            border-radius: 24px;
+           
+            background: #fff;
+            box-shadow: 2px 3px 2px grey;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .contact-block .desc {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+        .contact-block .icon-user {
+            font-size: 2.7rem;
+           
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sign-in-btn {
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 10px;
+            background: #1c57f8;
+            border: none;
+            color: #fff;
+           padding: 10px;
+            transition: 0.2s;
+            width: 100px;
+            border :1px solid black;
+        }
+        .sign-in-btn:hover{
+            background-color: white;
+            color: black;
+        }
+    /*    .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 36px;
+            margin-bottom: 24px;
+        }*/
+
+
+
+        /* Section title */
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Card Row */
+.topics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* Card Style */
+.browse-topic {
+  text-decoration: none;
+  color: #000;
+  border: 1px solid black;
+  border-radius: 16px;
+  padding: 30px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+
+.browse-topic .icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  margin-right: 10px;
+}
+
+.browse-topic-title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Contact Section */
+.contact-section {
+  margin-top: 40px;
+}
+
+.contact-section h3 {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.contact-section p {
+  margin: 6px 0;
+  font-size: 16px;
+}
+
+.contact-info p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-info i {
+  font-size: 18px;
+  color: #000;
+}
+
+      
+
+.quick-link {
+    border: 1px solid black;
+    border-radius: 28px;
+    padding: 20px 32px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;       /* vertically center content */
+    justify-content: space-between;
+    min-width: 300px;
+    background: #fff;
+    min-height: 122px;
+    position: relative;
+    gap: 20px;                 /* spacing between columns */
+}
+
+.quick-link .icon {
+    flex: 0 0 40px;            /* fixed width for icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quick-link-content {
+    flex: 1;                   /* takes remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100px;
+}
+
+.quick-link-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.quick-link-desc {
+    font-size: 1rem;
+    color: #333;
+}
+
+.quick-link .link-arrow {
+    flex: 0 0 auto;
+    margin-left: auto;         /* push arrow to right */
+    display: flex;
+    align-items: center;
+}
+.quick-links-row {
+    display: flex;
+    flex-wrap: wrap;          /* allow wrapping */
+    gap: 28px;
+    margin-bottom: 32px;
+    justify-content: center;  /* center align */
+}
+
+.quick-link {
+    flex: 1 1 calc(33.333% - 28px);  /* 3 per row */
+    max-width: calc(33.333% - 28px);
+    box-sizing: border-box;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <p>
+  <b><a href="{% url 'home' %}" style="color: black;">Home</a></b> / Contact
+</p>
+
+<div class="container mt-3">
+    <div class="section-title" style="font-size: 24px;" >Contact Us</div>
+    <div class="contact-block ">
+        <span class="desc">
+            <span class="icon-user">
+                <!-- user icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="none" viewBox="0 0 38 38">
+                    <circle cx="19" cy="19" r="17" stroke="#000" stroke-width="2"/>
+                    <circle cx="19" cy="14.5" r="6.5" stroke="#000" stroke-width="2"/>
+                    <path stroke="#000" stroke-width="2" d="M8 30c0-4.277 4.477-7.75 10-7.75S28 25.723 28 30"/>
+                </svg>
+            </span>
+            <span>
+                <span style="font-weight: 500; font-size: 1rem;">Getting help is easy<br></span>
+                <span style="font-size: 1rem;">Sign in to get help with recent orders</span>
+            </span>
+        </span>
+        <button class="sign-in-btn">Sign in</button>
+    </div>
+
+
+
+<div class="section-title">Quick Links</div>
+<div class="quick-links-row mb-4">
+    {% for link in quick_links %}
+    <a href="#" class="quick-link" style="text-decoration:none; color:#000;">
+        <!-- Left Icon -->
+        <span class="icon">
+            {% if link.icon %}
+                <img src="{{ link.icon.url }}" alt="{{ link.title }} icon" style="width: 50px; height: 50px; object-fit: contain;">
+            {% endif %}
+        </span>
+
+        <!-- Center Content -->
+        <div class="quick-link-content">
+            <span class="quick-link-title">{{ link.title }}</span>
+            <span class="quick-link-desc">{{ link.description }}</span>
+        </div>
+
+       
+<span class="link-arrow">
+  <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Blue filled circle -->
+    <circle cx="17" cy="17" r="16" fill="#0066ff"></circle>
+    <!-- White arrow -->
+    <line x1="10" y1="17" x2="24" y2="17" stroke="white" stroke-width="2.5"></line>
+    <polyline points="16 11 24 17 16 23" stroke="white" stroke-width="2.5"></polyline>
+  </svg>
+</span>
+
+
+
+
+    </a>
+    {% endfor %}
+</div>
+
+
+
+
+
+
+<!----
+<div class="section-title">Browse Topics</div>
+<div class="topic-content">
+<div class="topics-row mb-4">
+    {% for topic in browse_topics %}
+    <a href="#" class="browse-topic" style="text-decoration:none; color:#000;">
+        <span class="icon">
+            {% if topic.icon %}
+                <img src="{{ topic.icon.url }}" alt="{{ topic.title }} icon" style="width: 30px; height: 30px; object-fit: contain;">
+            {% endif %}
+        </span>
+        <span class="browse-topic-title">{{ topic.title }}</span>
+       <span class="link-arrow">
+  <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Blue filled circle --
+    <circle cx="17" cy="17" r="16" fill="#0066ff"></circle>
+    <!-- White arrow --
+    <line x1="10" y1="17" x2="24" y2="17" stroke="white" stroke-width="2.5"></line>
+    <polyline points="16 11 24 17 16 23" stroke="white" stroke-width="2.5"></polyline>
+  </svg>
+</span>
+    </a>
+    
+    {% endfor %}
+</div>
+</div>
+-->
+
+
+
+<!-- Browse Topics -->
+<div class="section-title">Browse Topics</div>
+<div class="topic-content">
+  <div class="topics-row">
+    {% for topic in browse_topics %}
+    <a href="#" class="browse-topic">
+      <div class="browse-topic-inner">
+        <span class="icon">
+          {% if topic.icon %}
+          <img src="{{ topic.icon.url }}" alt="{{ topic.title }} icon">
+          {% endif %}
+        </span>
+        <span class="browse-topic-title">{{ topic.title }}</span>
+        <span class="link-arrow">
+          <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="17" cy="17" r="16" fill="#0066ff"></circle>
+            <line x1="10" y1="17" x2="24" y2="17" stroke="white" stroke-width="1.5"></line>
+            <polyline points="16 11 24 17 16 23" stroke="white" stroke-width="1.5"></polyline>
+          </svg>
+        </span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Get in touch -->
+<div class="contact-section">
+  <h3>Get in touch</h3>
+  <p>If you have any inquiries, feel free to contact us</p>
+  <div class="contact-info">
+    <p><i class="fas fa-phone"></i> Call to 1234567890</p>
+    <p><i class="fas fa-envelope"></i> support@petpalooza.com</p>
+  </div>
+</div>
+
+
+
+
+
+</body>
+</html>
+{% endblock %}

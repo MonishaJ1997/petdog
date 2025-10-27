@@ -1,0 +1,808 @@
+ {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+/*
+
+.cart-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Progress Bar 
+.progress-container {
+  margin-bottom: 20px;
+}
+.progress-container p {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.progress-bar {
+  background: #eee;
+  border-radius: 5px;
+  height: 10px;
+  overflow: hidden;
+}
+.progress-fill {
+  width: 100%; /* full width = free shipping 
+  height: 100%;
+  background: #3b82f6; /* blue 
+}
+
+/* Cart Table 
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.cart-table th, .cart-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+.cart-table img {
+  width: 80px;
+  margin-right: 10px;
+}
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.remove-btn {
+  background: none;
+  border: none;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+}
+.quantity-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.quantity-box input {
+  width: 40px;
+  text-align: center;
+}
+
+/* Coupon 
+.coupon {
+  display: flex;
+  margin: 20px 0;
+}
+.coupon input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px 0 0 20px;
+}
+.coupon .btn {
+  background: #2563eb;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 0 20px 20px 0;
+  cursor: pointer;
+}
+
+/* Free Products 
+.offers {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+.offer-box {
+  background: lightgreen;
+  padding: 20px;
+  flex: 1;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+/* Cart Totals 
+.cart-totals {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ddd;
+}
+.cart-totals h3 {
+  margin-bottom: 15px;
+}
+.cart-totals p {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+.checkout-btn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 25px;
+}
+
+/* Payment Methods 
+.payments img {
+  height: 40px;
+  margin: 5px;
+}
+
+/* Footer Info 
+.footer-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  text-align: center;
+  gap: 20px;
+}
+.footer-info div {
+  flex: 1;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+}
+.footer-info img.footer-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.cart-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Two-column layout */
+.cart-content {
+  display: flex;
+  gap: 30px;
+}
+
+/* Left side */
+.cart-left {
+  flex: 2; /* wider */
+}
+
+/* Right side */
+.cart-right {
+  flex: 1; /* narrower */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Progress Bar */
+.progress-container {
+  margin-bottom: 20px;
+}
+.progress-container p {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.progress-bar {
+  background: #eee;
+  border-radius: 5px;
+  height: 10px;
+  overflow: hidden;
+}
+.progress-fill {
+  width: 100%; /* full width = free shipping */
+  height: 100%;
+  background: #3b82f6; /* blue */
+}
+
+/* Cart Table */
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.cart-table th, .cart-table td {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+.cart-table img {
+  width: 80px;
+  margin-right: 10px;
+}
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.remove-btn {
+  background: none;
+  border: none;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+.quantity-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.quantity-box input {
+  width: 40px;
+  text-align: center;
+}
+
+/* Coupon */
+.coupon {
+  display: flex;
+  margin: 20px 0;
+  gap: 20px;
+}
+.coupon input {
+  flex: 0.3;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px ;
+}
+.coupon .btn {
+  background: #1c57f8;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius:  20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.coupon .btn:hover{
+  background-color: white;
+  color: black;
+  border: 1px solid #1c57f8;
+}
+/* Free Products */
+.offers {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+.offer-box {
+  background: #98fb98;
+  padding: 20px;
+  flex: 1;
+  text-align: center;
+  
+  font-weight: bold;
+}
+
+/* Cart Totals */
+.cart-totals {
+  padding: 20px;
+ 
+  border-radius: 8px;
+}
+.cart-totals h3 {
+  margin-bottom: 15px;
+}
+/*
+.cart-totals p {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}*/
+.cart-totals p {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0 15px 0;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.cart-totals p.shipping {
+  flex-direction: row;
+}
+
+.cart-totals p.shipping span:last-child {
+  text-align: right;
+}
+.checkout-btn {
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  padding: 5px;
+  background: #1c57f8;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 25px;
+}
+.checkout-btn:hover{
+  background-color: white;
+  color: black;
+  border: 1px solid #1c57f8;
+}
+/* Payment Methods */
+.payments img {
+  height: 24px;
+  margin: 5px;
+}
+
+/* Footer Info 
+.footer-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: center;
+}
+.footer-info div {
+  flex: 1;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+}
+.footer-info img.footer-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}*/
+
+
+
+.footer-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.footer-info .footer-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  gap: 10px; /* space between image and text */
+}
+
+.footer-info img.footer-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.footer-text h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.footer-text p {
+  margin: 2px 0 0;
+  font-size: 14px;
+  color: #555;
+}
+
+
+
+/*
+    .cart-container { margin: 20px auto; max-width: 1200px; }
+    .product-img { width: 80px; height: auto; }
+    .info-icons { text-align: center; margin-top: 20px; }
+    .info-icons img { width: 40px; margin-bottom: 10px; }
+    .coupon-section { margin-top: 20px; }
+    .green-box { background: #90ee90; padding: 15px; margin: 10px; text-align: center; border-radius: 8px; }
+    
+    @media (max-width: 768px) {
+      .cart-container { padding: 10px; }
+      .green-box { font-size: 14px; padding: 10px; }
+      .info-icons img { width: 30px; }
+    }*/
+  </style>
+</head>
+<body>
+<p>
+  <a href="{% url 'home' %}" style="color: black;text-decoration: none;">Home/Dog//Turkey,Chickpea and sweet potato|small Breed 2kg</a> / Cart
+</p>
+
+
+
+
+<!----
+<div class="container cart-container row">
+  
+  <!-- Left side --
+  <div class="col-md-8">
+    <h5>Your order qualifies for free shipping!</h5>
+    <div class="progress mb-3">
+      <div class="progress-bar" style="width:100%;"></div>
+    </div>
+    <!----
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Remove</th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Sub Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart_items %}
+        <tr>
+          <td><button class="btn btn-sm btn-danger">X</button></td>
+          <td><img src="{{ item.products.image.url }}" class="product-img"> {{ item.product.name }}</td>
+          <td>₹ {{ item.product.price }}</td>
+          <td>
+            <input type="number" value="{{ item.quantity }}" class="form-control" style="width:70px;">
+          </td>
+          <td>₹ {{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>--
+
+
+
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th>Remove</th>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Sub Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in cart_items %}
+    <tr>
+      <td>
+        
+          {% csrf_token %}
+          <button class="btn btn-sm btn-danger">X</button>
+        </form>
+      </td>
+      <td>
+        <img src="{{ item.product.image.url }}" class="product-img" style="height:55px;">
+        <strong>{{ item.product.name }}</strong>
+      </td>
+      <td>₹ {{ item.product.price }}</td>
+      <td>
+        <div class="input-group" style="width:120px;">
+          <button class="btn btn-outline-dark btn-sm" type="button">-</button>
+          <input type="number" value="{{ item.quantity }}" class="form-control text-center" min="1">
+          <button class="btn btn-outline-dark btn-sm" type="button">+</button>
+        </div>
+      </td>
+      <td>₹ {{ item.subtotal }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+    <!-- Coupon --
+    <div class="coupon-section d-flex">
+      <input type="text" class="form-control me-2" placeholder="Coupon code">
+      <button class="btn btn-primary">Apply coupon</button>
+    </div>
+
+    <!-- Free products --
+    <div class="row mt-4">
+      <div class="col-md-4"><div class="green-box">Free products dog food combo 5 kg, turkey</div></div>
+      <div class="col-md-4"><div class="green-box">Free products dog food 2 kg turkey</div></div>
+      <div class="col-md-4"><div class="green-box">Free products dog food 2 kg chicken</div></div>
+    </div>
+    
+    <!-- Bottom Info icons --
+    <div class="row info-icons mt-4">
+      {% for icon in icons %}
+      <div class="col-md-4">
+        <img src="{{ icon.icon.url }}" alt="{{ icon.title }}">
+        <h6>{{ icon.title }}</h6>
+        <p>{{ icon.subtitle }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Right side --
+  <div class="col-md-4">
+    <div class="card p-3 shadow">
+      <h5>Card Totals</h5>
+      <p>Sub total: ₹ {{ subtotal }}</p>
+      <p>Shipping: ₹ {{ shipping }}</p>
+      <hr>
+      <h6>Total: ₹ {{ total }}</h6>
+      <button class="btn btn-primary w-100">Proceed to Checkout</button>
+    </div>
+
+    <h6 class="mt-3">Payment methods</h6>
+    <div class="d-flex gap-2">
+      <img src="{% static 'images/gpay.png' %}" width="40">
+      <img src="{% static 'images/phonepe.png' %}" width="40">
+      <img src="{% static 'images/mastercard.png' %}" width="40">
+      <img src="{% static 'images/paypal.png' %}" width="40">
+      <img src="{% static 'images/visa.png' %}" width="40">
+    </div>
+
+    <div class="mt-3">
+      <p><b>Delivery information:</b> Refund available within 14 days.</p>
+      <p><b>14 Days Money Back Guarantee:</b> Refund within 14 days of purchase.</p>
+    </div>
+  </div>
+</div>-->
+
+
+
+  <!----
+<div class="cart-container">
+
+  <!-- Progress Bar --
+  <div class="progress-container">
+    <p>Your order qualifies for free shipping!</p>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- Cart Table --
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th>Remove</th>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Sub Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart_items %}
+      <tr>
+        <td><button class="remove-btn">X</button></td>
+        <td class="product-info">
+          <img src="{{ item.image.url }}" alt="{{ item.name }}">
+          <span>{{ item.name }}</span>
+        </td>
+        <td>₹{{ item.price }}</td>
+        <td>
+          <div class="quantity-box">
+            <button>-</button>
+            <input type="text" value="1">
+            <button>+</button>
+          </div>
+        </td>
+        <td>₹{{ item.price }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Coupon --
+  <div class="coupon">
+    <input type="text" placeholder="Coupon code">
+    <button class="btn">Apply coupon</button>
+  </div>
+
+  <!-- Free Products --
+  <div class="offers">
+    <div class="offer-box">Free products dog food combo 5 kg, turkey</div>
+    <div class="offer-box">Free products dog food 2 kg turkey</div>
+    <div class="offer-box">Free products dog food 2 kg chicken</div>
+  </div>
+
+  <!-- Cart Totals --
+  <div class="cart-totals">
+    <h3>Card Totals</h3>
+    <p>Sub total: <span>₹{{ subtotal }}</span></p>
+    <p>Shipping: <span>Flat rate ₹{{ shipping }}</span></p>
+    <p>Total: <span>₹{{ total }}</span></p>
+    <small>(includes ₹{{ tax|floatformat:2 }} CGST, ₹{{ tax|floatformat:2 }} SGST)</small>
+    <button class="checkout-btn">Proceed to Checkout</button>
+  </div>
+
+  <!-- Payment Methods --
+  <div class="payments">
+    <h3>Payment methods</h3>
+    {% for method in payment_methods %}
+      <img src="{{ method.icon.url }}" alt="{{ method.name }}">
+    {% endfor %}
+  </div>
+
+  <!-- Footer Info Icons --
+  <div class="footer-info">
+    {% for f in footer_icons %}
+      <div>
+        <img src="{{ f.icon.url }}" alt="{{ f.title }}" class="footer-icon">
+        <h4>{{ f.title }}</h4>
+        <p>{{ f.description }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+</div>
+-->
+
+
+
+<div class="cart-container">
+
+  <div class="cart-content">
+    <!-- Left Side -->
+    <div class="cart-left">
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <p>Your order qualifies for free shipping!</p>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Cart Table -->
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Remove</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Sub Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart_items %}
+          <tr>
+            <td><button class="remove-btn">X</button></td>
+            <td class="product-info">
+              <img src="{{ item.image.url }}" alt="{{ item.name }}">
+              <span>{{ item.name }}</span>
+            </td>
+            <td>₹{{ item.price }}</td>
+            <td><!----
+              <div class="quantity-box">
+                <button>-</button>
+                <input type="text" value="1">
+                <button>+</button>
+              </div>-->
+
+
+              <div class="quantity-box">
+  <button class="decrease">-</button>
+  <input type="text" value="1" min="1">
+  <button class="increase">+</button>
+</div>
+
+<script>
+  const quantityBox = document.querySelector('.quantity-box');
+  const input = quantityBox.querySelector('input');
+  const btnIncrease = quantityBox.querySelector('.increase');
+  const btnDecrease = quantityBox.querySelector('.decrease');
+
+  btnIncrease.addEventListener('click', () => {
+    let current = parseInt(input.value) || 0;
+    input.value = current + 1;
+  });
+
+  btnDecrease.addEventListener('click', () => {
+    let current = parseInt(input.value) || 0;
+    if (current > 1) input.value = current - 1;
+  });
+</script>
+
+            </td>
+            <td>₹{{ item.price }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Coupon -->
+      <div class="coupon">
+        <input type="text" placeholder="Coupon code">
+        <button class="btn">Apply coupon</button>
+      </div>
+
+      <!-- Free Products -->
+      <div class="offers">
+        <div class="offer-box">Free products dog food combo 5 kg, turkey</div>
+        <div class="offer-box">Free products dog food 2 kg turkey</div>
+        <div class="offer-box">Free products dog food 2 kg chicken</div>
+      </div>
+
+
+
+      <div class="footer-info">
+  {% for f in footer_icons %}
+    <div class="footer-item">
+      <img src="{{ f.icon.url }}" alt="{{ f.title }}" class="footer-icon">
+      <div class="footer-text">
+        <h4>{{ f.title }}</h4>
+        <p>{{ f.description }}</p>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+    </div>
+
+    <!-- Right Side -->
+    <div class="cart-right">
+      <!-- Cart Totals -->
+      <div class="cart-totals">
+        <h3 style="font-weight: bold;">Cart Totals</h3>
+        <p>Sub total: <span>₹{{ subtotal }}</span></p>
+        <p class="shipping">
+    <span>Shipping:</span>
+    <span>
+      Flat rate ₹{{ shipping }}<br>
+      shipping to Madhya Pradesh;<br>
+      <a href="#">Change address</a>
+    </span>
+  </p>
+        <p>Total: <span>₹{{ total }}</span></p>
+        <small>(includes ₹{{ tax|floatformat:2 }} CGST, ₹{{ tax|floatformat:2 }} SGST)</small>
+        <button class="checkout-btn">Proceed to Checkout</button>
+      </div>
+
+      <!-- Payment Methods -->
+      <div class="payments">
+        <h5 style="font-weight: bold;">Payment methods</h5>
+        {% for method in payment_methods %}
+          <img src="{{ method.icon.url }}" alt="{{ method.name }}">
+        {% endfor %}
+      </div>
+<div class="delievery" style="font-size: 14px;">
+      <!-- Footer Info Icons -->
+     <h6 style="font-weight: bold;">Delievery Information</h6>
+     <p>Although you dont think youwill want one, we'll gladly provide a refund if its requested 
+      within 14 days of purchase.
+     </p>
+     <h6 style="font-weight: bold;">14 days money back guarantee</h6>
+     <p>Although you dont think youwill want one, we'll gladly provide a refund if its requested 
+      within 14 days of purchase.
+     </p>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+</body>
+</html>
+{% endblock %}

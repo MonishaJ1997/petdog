@@ -1,0 +1,159 @@
+ {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+     .order-summary {
+        background: #98fb98;
+        position: fixed;
+        right: 0;
+        top: 200px;
+        width: 400px;
+        min-height: 80vh;
+        padding: 32px 24px;
+        z-index: 10;
+        margin-right: 50px;
+    }
+    @media (max-width: 992px) {
+        .order-summary {
+            position: static;
+            width: 100%;
+            min-height: auto;
+            margin-bottom: 32px;
+            padding: 24px 8px;
+        }
+        .form-section { margin-right: 0; }
+    }
+    .form-section { margin-right: 420px; }
+    .payment-icons img {height: 24px;}
+    .checkbox-with-image { display: flex; align-items: center; gap: 10px; }
+    .order-summary hr { border-top: 1px solid #222; opacity: 0.15;}
+    .btn-primary {background-color: #0056ff !important; border: none;}
+</style>
+</head>
+<body>
+
+  
+
+<div class="container-fluid py-4">
+  <h2 class="mb-3" style="text-align: center;font-weight: bold;">Checkout</h2>
+  <div class="row">
+    <div class="col-lg-7 col-12 form-section">
+      
+      <form method="post" novalidate>
+        {% csrf_token %}
+      
+        <div class="mb-3">
+          {{ form.email.label_tag }} {{ form.email }}
+        </div>
+        <div class="checkbox-with-image mb-4">
+          {{ form.save_for_next }}
+         
+          <label class="form-check-label ms-2" for="id_save_for_next">Save this information for next time</label>
+        </div>
+        <!-- Delivery section -->
+        <h4>Delivery</h4>
+        <div class="row mb-3">
+          <div class="col-12 col-md-12">
+            {{ form.country.label_tag }} {{ form.country }}
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-6">
+            {{ form.first_name.label_tag }} {{ form.first_name }}
+          </div>
+          <div class="col-6">
+            {{ form.last_name.label_tag }} {{ form.last_name }}
+          </div>
+        </div>
+        <div class="mb-3">{{ form.address.label_tag }} {{ form.address }}</div>
+        <div class="mb-3">{{ form.apartment.label_tag }} {{ form.apartment }}</div>
+        <div class="row mb-3">
+          <div class="col-4">{{ form.city.label_tag }} {{ form.city }}</div>
+          <div class="col-4">{{ form.state.label_tag }} {{ form.state }}</div>
+          <div class="col-4">{{ form.pincode.label_tag }} {{ form.pincode }}</div>
+        </div>
+        <div class="mb-4">{{ form.phone.label_tag }} {{ form.phone }}</div>
+        <!-- Payment method -->
+        <h3 class="mb-3">Choose your payment method</h3>
+        <div class="mb-3">
+          <div class="form-check mb-2 align-items-center d-flex payment-icons" style=
+          "border: 1px solid black; border-radius: 10px;">
+            <input class="form-check-input" type="radio" name="payment_method" id="id_online" value="online" checked>
+            <label class="form-check-label ms-2" for="id_online">
+              Secure transaction(UPI, Cards, Wallets, Net banking)
+              {% for method in payment_methods %}
+          <img src="{{ method.icon.url }}" alt="{{ method.name }}">
+        {% endfor %}
+            </label>
+          </div>
+          <div class="form-check align-items-center d-flex mb-2" style=" padding: 10px; border-radius: 10px;">
+            <input class="form-check-input" type="radio" name="payment_method" id="id_cod" value="cod">
+            <label class="form-check-label ms-2" for="id_cod">Cash on Delivery</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mb-2" onclick="window.location.href='{% url 'final' %}'">Order Now</button>
+      </form>
+    </div>
+    <div class="col-lg-5 col-12">
+      <div class="order-summary">
+        <h4 class="mb-3">Order summary</h4>
+        <div class="d-flex mb-3 align-items-center">
+          {% if order_image %}
+            <img src="{{ order_image.image.url }}" alt="{{ order_image.title }}" style="height:120px;" class="me-2 rounded">
+          {% endif %}
+          <div>
+            <div style="font-weight:700;">Turkey, Chickpea & Sweet Potato<br>Small Breed 2Kg</div>
+            <div>MRP: ₹1,899</div>
+            <div>Quantity 1</div>
+            <div>Size: 1kg</div>
+          </div>
+        </div>
+        <div class="d-flex gap-2 mb-3">
+          <input type="text" class="form-control" placeholder="Discount code or gift card">
+          <button class="btn btn-primary">Apply</button>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-between mb-2">
+          <span>Sub total</span>
+          <span>₹1,899</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span>Shipping</span>
+          <span>Flat rate : ₹99.00</span>
+        </div>
+        <div class="mb-2">Shipping to Madhya Pradesh.</div>
+        <hr>
+        <div class="d-flex justify-content-between">
+          <span><b>Total</b></span>
+          <b>₹1,998</b>
+        </div>
+        <div class="text-muted mt-1" style="font-size:small;">(includes ₹251.62 CGST, ₹251.62 CGST)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+</body>
+</html>

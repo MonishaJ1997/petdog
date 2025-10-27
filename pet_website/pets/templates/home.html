@@ -1,0 +1,1394 @@
+ {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+   
+
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.circle {
+  width: 200px;
+  height: 200px;
+  background: #98FB98;
+  border-radius: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.circle img {
+  width: 150px;
+  height: 150px;
+  height: auto;
+  object-fit: cover;
+}
+/*
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-btn.left {
+  left: 8px;
+}
+
+.nav-btn.right {
+  right: 10px;
+}
+
+.nav-btn.hidden {
+  display: none;
+}
+*/
+/* container that clips the sliding row */
+
+/* container that clips the sliding row */
+.slider-container {
+  width: 100%;
+  position: relative;      /* so buttons can be absolute relative to this */
+  overflow: hidden;        /* hide the off-screen cards */
+  --card-gap: 20px;
+}
+
+/* the moving row */
+.slider-wrapper {
+  display: flex;
+  gap: var(--card-gap);
+  transition: transform 0.45s cubic-bezier(.22,.9,.4,1);
+  will-change: transform;
+}
+
+/* card sizing so exactly 5 show on desktop */
+.card {
+  box-sizing: border-box;
+  flex: 0 0 calc((100% - (var(--card-gap) * 4)) / 5); /* 5 cards visible, 4 gaps */
+  padding: 12px;
+  text-align: center;
+  border: none;
+}
+
+/* nav buttons (above slider so clickable) */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;               /* important: put buttons above the slider */
+  background: #1c49c2;
+  color: #fff;
+  border: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+}
+#prevBtn{
+  font-size: 20px;
+}
+/* left/right placement */
+.nav-btn.left { left: 8px; }
+.nav-btn.right { right: 8px; }
+
+/* hide utility */
+.nav-btn.hidden { display: none; }
+
+/* responsive: show fewer cards on smaller screens */
+@media (max-width: 1024px) {
+  .card { flex: 0 0 calc((100% - (var(--card-gap) * 2)) / 3); } /* 3 visible */
+}
+@media (max-width: 768px) {
+  .card { flex: 0 0 calc((100% - (var(--card-gap) * 1)) / 2); } /* 2 visible */
+}
+@media (max-width: 480px) {
+  .card { flex: 0 0 100%; } /* 1 visible */
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+}
+.card-body{
+  width: 150px;
+}
+
+.promo-container {
+    display: flex;
+    flex-direction: row;
+    background: #1c57f8;
+    border-radius: 24px;
+    overflow: hidden;
+    min-height: 380px;
+    align-items: stretch;
+    margin: 16px auto;
+     position: relative;
+}
+
+.promo-left {
+    flex: 1;
+    color: #fff;
+    padding: 48px 24px 24px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.promo-left h5 {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.promo-left p {
+    font-size: 1.15rem;
+    margin-bottom: 32px;
+    font-weight: 400;
+    margin-top: 40px;
+}
+
+.promo-left button {
+    background: #fff;
+    color: black;
+    border: none;
+    border-radius: 20px;
+   padding: 10px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 40%;
+}
+.promo-center-circle {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  background: white;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  z-index: 10;
+}
+.promo-right {
+    position: relative;
+    width: 44%;
+    background: #f9fbfe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.promo-right img {
+    max-width: 100%;
+    height: 380px;
+    border-radius: 0 20px 20px 0;
+    object-fit: cover;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.promo-circle {
+    position: absolute;
+    left: -68px;
+    top: 108px;
+    background: #fff;
+    color: #022eb7;
+    font-size: 2rem;
+    font-weight: 700;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 24px rgba(2,97,250,0.12);
+    z-index: 2;
+}
+
+@media (max-width: 900px) {
+    .promo-container {
+        flex-direction: column;
+        min-height: unset;
+    }
+    .promo-left {
+        padding: 32px 16px 16px 16px;
+        text-align: center;
+    }
+    .promo-right {
+        width: 100%;
+        min-height: 220px;
+    }
+    .promo-right img {
+        border-radius: 0 0 32px 32px;
+        max-height: 220px;
+    }
+    .promo-circle {
+        position: static;
+        margin: 0 auto 16px auto;
+        left: unset;
+        top: unset;
+        width: 140px;
+        height: 140px;
+        font-size: 1.2rem;
+    }
+}
+/*
+ .banner-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #DFF5E1; /* exact green background 
+}
+
+.banner-slide {
+  display: none;
+  width: 100%;
+  min-height: 400px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px;
+}
+
+.banner-slide.active {
+  display: flex;
+}
+
+.banner-img {
+  width: 45%;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.banner-text {
+  width: 50%;
+}
+
+.banner-text h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.banner-text p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.banner-btn {
+  padding: 10px 25px;
+  background: #007bff;
+  color: white;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+    .banner-container {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #f7fff7;
+    }
+
+    .banner-slide {
+      display: none;
+      width: 100%;
+      min-height: 400px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px;
+    }
+
+    .banner-slide.active {
+      display: flex;
+    }
+
+    .banner-img {
+      width: 45%;
+      max-height: 400px;
+      object-fit: contain;
+    }
+
+    .banner-text {
+      width: 50%;
+    }
+
+    .banner-text h2 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .banner-text p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .banner-btn {
+      padding: 10px 25px;
+      background: #007bff;
+      color: white;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    
+    .dots {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .dot {
+      height: 12px;
+      width: 12px;
+      margin: 0 4px;
+      display: inline-block;
+      border-radius: 50%;
+      background: #bbb;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .dot.active {
+      background: #333;
+    }
+
+    
+    @media (max-width: 768px) {
+      .banner-slide {
+        flex-direction: column;
+        text-align: center;
+      }
+      .banner-img, .banner-text {
+        width: 100%;
+      }
+      .banner-img {
+        max-height: 250px;
+      }
+    }
+
+*/
+ 
+.bannered {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #98Fb98; 
+  border-radius: 25px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  gap: 20px;
+}
+
+.bannered-text h2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #000;
+  margin: 0;
+  text-align: start;
+}
+
+.bannered-image img {
+  max-width: 120px;
+  border-radius: 10px;
+}
+
+.shop-btns  {
+  background: #1c57f8;
+  color: #fff !important;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+  transition: 0.3s;
+  border:3px solid black ;
+  width: 180px;
+  font-size: 20px;
+}
+
+ .shop-btns:hover {
+  background: #98Fb98;
+  color: black !important;
+}
+
+
+@media (max-width: 900px) {
+  .banner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .banner-text h2 {
+    font-size: 1.1rem;
+  }
+  .banner-image img {
+    max-width: 100px;
+  }
+  .banner-btn {
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 500px) {
+  .banner {
+    padding: 15px;
+  }
+  .banner-text h2 {
+    font-size: 1rem;
+  }
+  .banner-image img {
+    max-width: 80px;
+  }
+  .banner-btn .shop-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}*/
+
+
+
+
+
+
+.banner-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-height: 600px;
+}
+
+.banner-slide {
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.banner-slide.active {
+  display: flex;
+}
+
+.banner-img {
+  width: 50%;
+  height: auto;
+  object-fit: cover;
+  height:300px;
+}
+
+.banner-text {
+  width: 50%;
+  background: #98FB98;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+  position: relative;
+  height: 300px;
+}
+
+.banner-text h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.banner-text p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.banner-btn {
+  background: #007bff;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.banner-btn:hover {
+  background: #0056b3;
+}
+
+.banner-text img.extra {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  width: 100px;
+}
+
+/* dots */
+.dots {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 5px;
+  border-radius: 50%;
+  border: 2px solid black;
+  background: white;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: #007bff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* === General Carousel Styles === */
+.carousel-item {
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #b8f5b8; /* light green like in your screenshots */
+  padding: 40px;
+}
+
+.carousel-item img.dog {
+  max-height: 300px;
+  object-fit: contain;
+}
+
+/* === Content Box === */
+.content-box {
+  padding: 20px;
+  text-align: left;
+}
+
+.content-box h2 {
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.content-box p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+/* === Buttons === */
+.shop-btn {
+  background: #007bff;
+  color: #fff;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-size: 18px;
+  border: none;
+  transition: 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+.shop-btn:hover {
+  background:White;
+  color: black;
+  border: 1px solid black;
+}
+
+/* === Carousel Indicators (dots) === */
+.carousel-indicators [data-bs-target] {
+  background-color: #000;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.carousel-indicators .active {
+  background-color: #007bff;
+}
+
+/* === Offer Diamond Shape === */
+.diamond {
+  background: red;
+  color: white;
+  transform: rotate(45deg);
+  padding: 25px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+.diamond span {
+  display: block;
+  transform: rotate(-45deg);
+  font-size: 1.2rem;
+}
+
+/* === Responsive Media Queries === */
+@media (max-width: 991px) {
+  .carousel-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  .carousel-item img.dog {
+    max-height: 300px;
+    margin-bottom: 20px;
+  }
+  .content-box {
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .content-box h2 {
+    font-size: 1.5rem;
+  }
+  .content-box p {
+    font-size: 1rem;
+  }
+  .shop-btn {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+  .diamond {
+    padding: 15px;
+  }
+  .diamond span {
+    font-size: 1rem;
+  }
+}
+
+
+
+
+
+
+.service-card {
+  
+  border-radius: 20px;
+  overflow: hidden;
+  
+  text-align: center;
+  transition: transform 0.3s;
+  padding-bottom: 15px;
+  width: 250px;
+}
+
+
+
+.service-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.service-footer {
+  background: #1c57f8;
+  color: #fff;
+  font-weight: bold !important;
+  padding: 12px 0;
+  border-radius: 0 0 20px 20px;
+  margin-top: -5px;
+  
+  
+}
+
+.desc {
+  font-size: 0.9rem;
+  color: black;
+  margin-top: 10px;
+  padding: 0 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .service-card img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .service-card img {
+    height: 180px;
+  }
+  .desc {
+    font-size: 0.85rem;
+  }
+}
+
+/*
+.containersss {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;              
+    margin: 20px;
+}
+
+/* Banner section (Dog image) 
+.banner {
+    flex: 0 0 25%;        
+    text-align: center;
+}
+
+.dog-img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+
+.products {
+    flex: 0 0 75%;         
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+    width: 100%;
+    gap: 20px;              
+}
+
+.product-card {
+    flex: 0 0 calc((100% - 60px) / 4);   
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+
+.product-card img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.title {
+   
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.stars {
+   
+    font-size: 20px;
+    margin: 5px 0;
+}
+
+.star-filled {
+    color: yellow;  
+}
+.star-empty {
+    color: #ccc;  
+}    
+.price {
+    font-size: 14px;
+    color: #333;
+    
+}
+
+
+
+.arrow {
+    position: absolute;
+    top: 40%;
+    font-size: 1.5rem;
+    background: #007bff;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.arrow.left { left: -20px; }
+.arrow.right { right: -20px; }
+.arrow.hidden { display: none; }
+
+
+
+*/
+
+
+
+.containersss {
+  display: flex;
+  gap: 30px;        /* space between banner & carousel */
+  align-items: flex-start;
+}
+
+/* banner */
+.banner {
+  flex: 0 0 25%;    /* dog image column is 30% */
+  text-align: flex-start;
+  
+}
+.dog-img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* products area */
+.products {
+  flex: 1 1 70%;
+  position: relative;   /* arrows positioned relative to this */
+  min-width: 0;         /* allow flex shrink */
+}
+
+/* viewport that hides overflow of sliding track */
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* sliding track */
+.carousel {
+  display: flex;
+  gap: 20px;                 /* gap between cards */
+  transition: transform 400ms ease;
+  will-change: transform;
+  padding-bottom: 6px;
+}
+
+/* exact 4 cards visible: calc takes total gap into account (3 gaps of 20px = 60px) */
+.product-card {
+  flex: 0 0 calc((100% - 60px) / 4); /* 4 cards, minus gaps */
+  box-sizing: border-box;
+  background: #fff;
+  
+  padding: 10px;
+  text-align: flex-start;
+  border: 1px solid black;
+  box-shadow: 0 6px 14px rgba(19,21,26,0.04);
+}
+
+/* product image */
+.product-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display:block;
+  margin-bottom: 8px;
+}
+
+/* title / stars / price */
+.title {  font-size: 14px; margin: 6px 0; color:#222; }
+.stars { font-size: 16px; margin: 6px 0; line-height:1; }
+.star-filled { color:yellow;font-size: 20px; }  /* gold */
+.star-empty { color: #ccc; }      /* grey */
+.price {  color: #111; margin-top:6px; font-size: 14px;}
+
+/* arrows (above cards) */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background:#1c57f8;     /* blue background */
+  color: #fff;             /* white icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  z-index: 999;            /* make sure it's above the cards */
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+  font-size: 20px;
+}
+
+/* arrow positions inside the products area so not clipped */
+.arrow.left { left: -10px; }
+.arrow.right { right: -10px; }
+
+/* hide with display:none; we toggle that from JS */
+.arrow[style*="display:none"] { display: none !important; }
+
+/* small screens responsiveness */
+@media (max-width: 900px) {
+  .banner { flex: 0 0 35%; }
+  .product-card { flex: 0 0 calc((100% - 40px) / 2); } /* 2 cards on medium screens */
+}
+@media (max-width: 520px) {
+  .container { flex-direction: column; gap: 16px; }
+  .banner { width: 100%; flex: none; }
+  .product-card { flex: 0 0 100%; }
+  .arrow { display: none; } /* hide arrows on tiny screens (you can enable touch swipe later) */
+}
+
+
+
+
+
+
+
+ 
+  </style>
+</head>
+<body>
+
+
+
+
+<div class="banner-container">
+  {% for banner in banners %}
+  <div class="banner-slide {% if forloop.first %}active{% endif %}">
+    
+    <!-- Left image --->
+    <img src="{{ banner.image.url }}" class="banner-img" alt="{{ banner.title }}">
+
+    <!-- Right content -->
+    <div class="banner-text">
+      <h2>{{ banner.title }}</h2>
+      <p>{{ banner.subtitle|linebreaksbr }}</p>
+      <a href="{{ banner.button_link|default:'#' }}" class="banner-btn">{{ banner.button_text }}</a>
+      
+      {% if banner.extra_image %}
+        <img src="{{ banner.extra_image.url }}" class="extra" alt="Extra">
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Dots -->
+<div class="dots">
+  {% for banner in banners %}
+    <span class="dot {% if forloop.first %}active{% endif %}" onclick="showSlide({{ forloop.counter0 }})"></span>
+  {% endfor %}
+</div>
+
+<script>
+let slideIndex = 0;
+let slides = document.getElementsByClassName("banner-slide");
+let dots = document.getElementsByClassName("dot");
+
+function showSlides() {
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].classList.remove("active");
+    dots[i].classList.remove("active");
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) { slideIndex = 1 }
+  slides[slideIndex-1].classList.add("active");
+  dots[slideIndex-1].classList.add("active");
+  setTimeout(showSlides, 4000); // change every 4 sec
+}
+
+function showSlide(n) {
+  slideIndex = n + 1;
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].classList.remove("active");
+    dots[i].classList.remove("active");
+  }
+  slides[n].classList.add("active");
+  dots[n].classList.add("active");
+}
+
+showSlides();
+</script>
+
+
+
+
+<h2>Shop by Pet</h2>
+<div class="slider-container">
+  <button class="nav-btn left hidden" id="prevBtn">&#10094;</button>
+  <div class="slider-wrapper" id="slider">
+    {% for pet in pets %}
+      <div class="card">
+        <div class="circle">
+          <img src="{{ pet.image.url }}" alt="{{ pet.name }}">
+        </div>
+        <p style="font-weight: bold; font-size: 22px;">{{ pet.name }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  <button class="nav-btn right" id="nextBtn"> &#10095;</button>
+</div>
+<script>
+  
+document.addEventListener('DOMContentLoaded', () => {
+  const slider = document.getElementById('slider'); // .slider-wrapper
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const cards = slider.querySelectorAll('.card');
+  const totalItems = cards.length;
+  let currentIndex = 0;
+  let itemsPerPage = getItemsPerPage();
+  let cardWidth = 0;
+  let gap = 0;
+
+  function getItemsPerPage() {
+    const w = window.innerWidth;
+    if (w <= 480) return 1;
+    if (w <= 768) return 2;
+    if (w <= 1024) return 3;
+    return 5;
+  }
+
+  function calcSizes() {
+    itemsPerPage = getItemsPerPage();
+    gap = parseFloat(getComputedStyle(slider).gap) || 0;
+
+    if (cards.length > 0) {
+      // width of one card in px (excluding the gap) — getBoundingClientRect returns width
+      const rect = cards[0].getBoundingClientRect();
+      cardWidth = rect.width + gap;
+    } else {
+      cardWidth = 0;
+    }
+  }
+
+  function update() {
+    calcSizes();
+    const maxIndex = Math.max(0, totalItems - itemsPerPage);
+
+    // clamp index
+    if (currentIndex < 0) currentIndex = 0;
+    if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+    // translate slider by pixels (safe and accurate)
+    slider.style.transform = `translateX(${-(currentIndex * cardWidth)}px)`;
+
+    // toggle visibility of buttons
+    prevBtn.classList.toggle('hidden', currentIndex === 0);
+    nextBtn.classList.toggle('hidden', currentIndex >= maxIndex);
+  }
+
+  function shiftAmount() {
+    // desired behavior: on desktop (5 visible) shift by 2 (1-5 -> 3-7)
+    // for other sizes shift by Math.max(1, Math.floor(itemsPerPage/2))
+    return Math.max(1, Math.floor(itemsPerPage / 2));
+  }
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex += shiftAmount();
+    update();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex -= shiftAmount();
+    update();
+  });
+
+  // when resizing, recalc sizes and clamp index (keeps alignment)
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      const oldItems = itemsPerPage;
+      calcSizes();
+      // if itemsPerPage changed, adjust currentIndex so window stays reasonable
+      const maxIndex = Math.max(0, totalItems - itemsPerPage);
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+      update();
+    }, 120);
+  });
+
+  // initial
+  // ensure wrapper has transition (in case CSS not loaded)
+  slider.style.transition = slider.style.transition || 'transform 0.45s cubic-bezier(.22,.9,.4,1)';
+  update();
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 style="text-align: center;margin-top: 40px; margin-bottom: 20px;">Top Related Calming Products</h2>
+<div class="containersss">
+        <!-- Left Banner -->
+        <div class="banner">
+            {% if banner %}
+                <img src="{{ banner.image.url }}" alt="Dog Banner" class="dog-img">
+                <h5 style="font-weight: bold;">{{ banner.title }}</h5>
+                <p>{{ banner.subtitle }}</p>
+            {% endif %}
+        </div>
+
+       
+
+
+
+
+      <div class="products" aria-label="product carousel">
+      <!-- Left arrow (hidden initially) -->
+      <button id="arrow-left" class="arrow left" aria-label="previous" style="display:none">
+        &#10094;
+      </button>
+
+      <!-- viewport that clips the sliding area only -->
+      <div class="carousel-viewport">
+        <div id="carousel" class="carousel">
+          {% for p in products %}
+            <div class="product-card">
+              <img src="{{ p.image.url }}" alt="{{ p.title }}">
+              <p class="title">{{ p.title }}</p>
+              <div class="stars">
+                {% for i in "12345" %}
+                  {% if forloop.counter <= p.rating %}
+                    <span class="star-filled">★</span>
+                  {% else %}
+                    <span class="star-empty">★</span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+              <p class="price">₹ {{ p.price }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Right arrow (visible initially) -->
+      <button id="arrow-right" class="arrow right" aria-label="next">
+        &#10095;
+      </button>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const carousel = document.getElementById('carousel');
+    const leftBtn = document.getElementById('arrow-left');
+    const rightBtn = document.getElementById('arrow-right');
+    const cards = carousel.querySelectorAll('.product-card');
+
+    const total = {{ products|length }};    // injected from Django
+    const visible = 4;                      // you asked for 4 visible cards
+    const step = 2;                         // jump 1–4 -> 3–6 (step=2)
+
+    if (!cards.length) {
+      leftBtn.style.display = rightBtn.style.display = 'none';
+      return;
+    }
+
+    let position = 0; // index of the first visible card (0-based)
+
+    function getGapPx() {
+      // flex gap (modern browsers)
+      const gap = getComputedStyle(carousel).gap;
+      return gap ? parseFloat(gap) : 0;
+    }
+
+    function computeShiftPx() {
+      // card width (including padding/border) + gap
+      const firstCard = cards[0];
+      const cardWidth = firstCard.getBoundingClientRect().width;
+      const gap = getGapPx();
+      return position * (cardWidth + gap);
+    }
+
+    function applyTransform() {
+      const shiftPx = computeShiftPx();
+      carousel.style.transform = `translateX(-${shiftPx}px)`;
+    }
+
+    function updateArrows() {
+      if (total <= visible) {
+        leftBtn.style.display = rightBtn.style.display = 'none';
+        return;
+      }
+      if (position === 0) {
+        // start: only show right arrow (to move forward)
+        rightBtn.style.display = 'flex';
+        leftBtn.style.display = 'none';
+      } else if (position >= total - visible) {
+        // end: only show left arrow (to go back)
+        rightBtn.style.display = 'none';
+        leftBtn.style.display = 'flex';
+      } else {
+        // middle (if any): show both (optional) — change to only one if you want
+        rightBtn.style.display = 'flex';
+        leftBtn.style.display = 'flex';
+      }
+    }
+
+    rightBtn.addEventListener('click', function () {
+      position = Math.min(position + step, total - visible);
+      applyTransform();
+      updateArrows();
+    });
+
+    leftBtn.addEventListener('click', function () {
+      position = Math.max(position - step, 0);
+      applyTransform();
+      updateArrows();
+    });
+
+    // Recompute on resize so cards stay aligned
+    window.addEventListener('resize', function () {
+      applyTransform();
+    });
+
+    // initial layout
+    updateArrows();
+    applyTransform();
+  });
+  </script>
+
+
+
+
+<div class="promo-container">
+  <div class="promo-left">
+    <h5>Store - Door savings with Autoship.</h5>
+    <p>SAVE 35% on first order plus stack limited-time deals on top Autoship-items, see terms</p>
+    <button>Shop & Save</button>
+  </div>
+  <div class="promo-right">
+    <img src="{{ promo_image.image.url }}" alt="Promo">
+    
+  </div>
+
+   <div class="promo-center-circle">
+    Save<br>35%
+  </div>
+</div>
+
+
+
+<div class="bannered">
+    <div class="bannered-text">
+      <h2>
+        Buy 1 blue wilderness dry dog food, 13-28lbs,<br>
+        get 2 free wild cut Toppers*
+      </h2>
+    </div>
+
+    <div class="bannered-image">
+      {% if image %}
+        <img src="{{ image.image.url }}" alt="Dog Food">
+      {% else %}
+        <img src="{% static 'images/placeholder.png' %}" alt="Placeholder">
+      {% endif %}
+    </div>
+
+    
+      <button type="submit" class="shop-btns">Shop Now</button>
+    
+  </div>
+
+
+
+<div class="containery py-4 text-center">
+    <h2 class="fw-bold">Pet Servicess</h2>
+    <p style="font-size: 20px; margin-top: -10px;" >Treats Rewards members earn points on every service</p>
+
+    <div class="row g-4 mt-4">
+      {% for service in services %}
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="service-card">
+            <img src="{{ service.image.url }}" alt="{{ service.title }}">
+            <div class="service-footer">
+              <h5>{{ service.title }}</h5>
+            </div>
+          </div>
+          
+           <p class="desc">{{ service.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</body>
+</html>
+
+{% endblock %}

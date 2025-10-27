@@ -1,0 +1,651 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}PetPalazoo{% endblock %}</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<!-- Font Awesome 6 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+  <!-- Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+     body { font-family: 'Montserrat', sans-serif; margin:0; }
+    .top-bar, .category-bar { background:#1c49c2; color:#fff; }
+
+    /* Search box */
+    .search-wrap { position: relative; }
+    .search-wrap .form-control {
+      border-radius: 28px;
+      gap: 20px;
+      padding: 3px 36px;
+      color: #000 !important;
+      width: 70%;
+   /*   padding: 8px 16px 8px 40px;*/
+    }
+    .search-wrap .bi-search {
+      position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+      color: rgba(0,0,0,0.45);
+    }
+
+    /* Links */
+    .top-links .nav-link,
+    .category-nav .nav-link {
+      color: #fff !important;
+      font-weight: 600;
+      padding: 6px 10px;
+    }
+   
+
+    /* Cart badge */
+    .cart-wrap { position: relative; }
+    .cart-badge {
+      position: absolute; top: -6px; right: -10px;
+      background: yellow; color: #000; font-weight:700;
+      font-size:.72rem; padding: 2px 6px; border-radius: 50%;
+    }
+
+    .nav-link.active {
+    color: yellow !important;
+    font-weight: bold;
+}
+
+.footer {
+  background: #1c49c2;
+  color: #fff;
+  padding: 40px 20px;
+  
+}
+
+.footer .footer-logo {
+  width: 120px;
+  margin-bottom: 10px;
+}
+
+.footer-title {
+  font-weight: bold;
+  margin-top: 5px;
+  font-size: 22px;
+}
+
+.footer-heading h6  {
+  font-weight: bold;
+  margin-bottom: 10px;
+font-size: 20px;
+color: white;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+.footer ul li a {
+  text-decoration: none;
+  color: #fff;
+  transition: 0.3s;
+  font-size: 15px;
+}
+
+.footer ul li a:hover {
+  color: #ddd;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.social-icons img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.subscribe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 200px;
+}
+
+.subscribe-form input {
+  padding: 10px;
+  border: none;
+  
+}
+.subscribe-form input::placeholder {
+  color: #000;   /* black color */
+  opacity: 1;    /* ensures it's fully visible */
+}
+
+.subscribe-form button {
+  padding: 10px;
+  border: none;
+  background: #fff;
+  color: #000;
+  
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.subscribe-form button:hover {
+  background: #ddd;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .footer .row {
+    text-align: center;
+  }
+  .footer-col {
+    margin-bottom: 20px;
+  }
+  .social-icons {
+    justify-content: center;
+  }
+}
+.nav-link.active {
+  color: yellow !important;       /* White text */
+     /* Green background */
+ 
+}
+.row h6{
+color: black;
+font-weight: bold;
+}
+.row a{
+  line-height: 1;
+  font-size: 14px;
+}
+
+
+.dropdown-brand-img {
+    width: 150px;
+    height: auto;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.nav-link {
+  color: #000; /* default text */
+}
+
+.nav-link:hover {
+  color: green; /* hover state */
+}
+
+.nav-link.active {
+  color: yellow !important; /* active state */
+  font-weight: bold;
+}
+
+
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="top-bar py-2">
+  <div class="container d-flex align-items-center justify-content-between">
+
+    <!-- Logo -->
+    <a class="d-flex align-items-center text-white text-decoration-none" href="{% url 'home' %}">
+      {% if site_logo and site_logo.image %}
+        <img src="{{ site_logo.image.url }}" alt="{{ site_logo.alt_text }}" height="60" style="margin-top: 10px;" class="me-2">
+      {% endif %}
+     
+    </a>
+
+    <!-- Search -->
+    <div class="search-wrap flex-grow-1 mx-4">
+      <i class="bi bi-search"></i>
+      <input type="search" class="form-control" placeholder="Search for products" style="color: #000;" />
+    </div>
+
+    <!-- Top nav links -->
+   <!-- Top nav links -->
+<ul class="nav top-links align-items-center">
+  <li class="nav-item">
+    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">About</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}" href="{% url 'login' %}">Login</a>
+  </li>
+  <li class="nav-item cart-wrap">
+    <a class="nav-link {% if request.resolver_match.url_name == 'cart' %}active{% endif %}" href="{% url 'cart' %}">
+      <i class="bi bi-cart"></i> Cart
+      <span class="cart-badge">1</span>
+    </a>
+  </li>
+</ul>
+
+  </div>
+</header>
+
+<!-- CATEGORY BAR -->
+<div class="category-bar py-2">
+  <div class="container">
+    <ul class="nav category-nav justify-content-center">
+
+
+  <li class="nav-item dropdown d-flex align-items-center">
+  
+  <!-- Dog link --
+  <a class="nav-link" href="{% url 'dog' %}">
+    Dog
+  </a>
+-->
+
+
+<a class="nav-link {% if request.path == '/dog/' %}active{% endif %}" href="{% url 'dog' %}">
+      Dog
+    </a>
+  <!-- Dropdown toggle (on same line) -->
+  <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+
+  <!-- Dropdown menu -->
+  <ul class="dropdown-menu p-4" style="width:1300px;">
+   
+
+ 
+
+    <div class="row">
+      <div class="col-md-2">
+        <h6 class="dropdown-header">Dry & wet food</h6>
+        <a class="dropdown-item" href="#">Dry Dog Food</a>
+        <a class="dropdown-item" href="#">Wet Dog Food</a>
+        <a class="dropdown-item" href="#">Veg Dog Food</a>
+        <a class="dropdown-item" href="#">Grain Free Dog Food</a>
+        <a class="dropdown-item" href="#">Human Grade Food</a>
+        <a class="dropdown-item" href="#">Low Grain Dog Food</a>
+        <a class="dropdown-item" href="#">Prescription Dog Food</a>
+        <a class="dropdown-item" href="#">Puppy Food</a>
+      </div>
+      <div class="col-md-2">
+        <h6 class="dropdown-header">Clothing</h6>
+        <a class="dropdown-item" href="#">T-shirts</a>
+        <a class="dropdown-item" href="#">Raincoat</a>
+        <a class="dropdown-item" href="#">Sweaters</a>
+        <a class="dropdown-item" href="#">Special Occasion Wear</a>
+        <a class="dropdown-item" href="#">Hoodies & Sweatshirts</a>
+        <a class="dropdown-item" href="#">Jackets</a>
+        <a class="dropdown-item" href="#">Socks</a>
+        <a class="dropdown-item" href="#">Dresses</a>
+        <a class="dropdown-item" href="#">Shoes</a>
+        <a class="dropdown-item" href="#">Bandana</a>
+      </div>
+      <div class="col-md-2">
+        <h6 class="dropdown-header">Dog toys</h6>
+        <a class="dropdown-item" href="#">Rope Toys</a>
+        <a class="dropdown-item" href="#">Tough Chew Toys</a>
+        <a class="dropdown-item" href="#">Chew Toys</a>
+        <a class="dropdown-item" href="#">Plush Toys</a>
+        <a class="dropdown-item" href="#">Interactive Toys</a>
+        <a class="dropdown-item" href="#">Squeaky Toys</a>
+        <a class="dropdown-item" href="#">Ball Toys</a>
+        <a class="dropdown-item" href="#">Fetch Toys</a>
+      </div>
+      <div class="col-md-3">
+        <h6 class="dropdown-header">Health care</h6>
+        <a class="dropdown-item" href="#">Skin Care</a>
+        <a class="dropdown-item" href="#">Eye Care</a>
+        <a class="dropdown-item" href="#">Digestion And Immunity</a>
+        <a class="dropdown-item" href="#">Hip And Joint Care</a>
+        <a class="dropdown-item" href="#">Dental Care</a>
+        <a class="dropdown-item" href="#">Calcium Supplements</a>
+        <a class="dropdown-item" href="#">Ear Care</a>
+        <a class="dropdown-item" href="#">Deworming</a>
+        <a class="dropdown-item" href="#">Tick And Flea Solutions</a>
+        <a class="dropdown-item" href="#">Antibiotics</a>
+      </div>
+      <div class="col-md-3">
+        <h6 class="dropdown-header">Dog beds & mats</h6>
+        <a class="dropdown-item" href="#">Dog Beds</a>
+        <a class="dropdown-item" href="#">Dog Cushions</a>
+        <a class="dropdown-item" href="#">Dog Blankets</a>
+        <a class="dropdown-item" href="#">Dog Mats</a>
+        <a class="dropdown-item" href="#">Wooden Furniture</a>
+        <a class="dropdown-item" href="#">Dog Tents</a>
+      </div>
+    </div>
+  </ul>
+</li>
+
+
+  <ul class="nav category-nav justify-content-center">
+
+
+  <li class="nav-item dropdown d-flex align-items-center">
+  
+  <!-- Dog link -->
+  <a class="nav-link" href="{% url 'cat' %}">
+    Cat
+  </a>
+
+  <!-- Dropdown toggle (on same line) -->
+  <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+
+  <!-- Dropdown menu -->
+  <ul class="dropdown-menu p-4" style="width:1300px;">
+   
+
+ 
+
+    <div class="row">
+      <div class="col-md-2">
+        <h6 class="dropdown-header">Dry & wet food</h6>
+        <a class="dropdown-item" href="#">Dry Dog Food</a>
+        <a class="dropdown-item" href="#">Wet Dog Food</a>
+        <a class="dropdown-item" href="#">Veg Dog Food</a>
+        <a class="dropdown-item" href="#">Grain Free Dog Food</a>
+        <a class="dropdown-item" href="#">Human Grade Food</a>
+        <a class="dropdown-item" href="#">Low Grain Dog Food</a>
+        <a class="dropdown-item" href="#">Prescription Dog Food</a>
+        <a class="dropdown-item" href="#">Puppy Food</a>
+      </div>
+      <div class="col-md-2">
+        <h6 class="dropdown-header">Clothing</h6>
+        <a class="dropdown-item" href="#">T-shirts</a>
+        <a class="dropdown-item" href="#">Raincoat</a>
+        <a class="dropdown-item" href="#">Sweaters</a>
+        <a class="dropdown-item" href="#">Special Occasion Wear</a>
+        <a class="dropdown-item" href="#">Hoodies & Sweatshirts</a>
+        <a class="dropdown-item" href="#">Jackets</a>
+        <a class="dropdown-item" href="#">Socks</a>
+        <a class="dropdown-item" href="#">Dresses</a>
+        <a class="dropdown-item" href="#">Shoes</a>
+        <a class="dropdown-item" href="#">Bandana</a>
+      </div>
+      <div class="col-md-2">
+        <h6 class="dropdown-header">Dog toys</h6>
+        <a class="dropdown-item" href="#">Rope Toys</a>
+        <a class="dropdown-item" href="#">Tough Chew Toys</a>
+        <a class="dropdown-item" href="#">Chew Toys</a>
+        <a class="dropdown-item" href="#">Plush Toys</a>
+        <a class="dropdown-item" href="#">Interactive Toys</a>
+        <a class="dropdown-item" href="#">Squeaky Toys</a>
+        <a class="dropdown-item" href="#">Ball Toys</a>
+        <a class="dropdown-item" href="#">Fetch Toys</a>
+      </div>
+      <div class="col-md-3">
+        <h6 class="dropdown-header">Health care</h6>
+        <a class="dropdown-item" href="#">Skin Care</a>
+        <a class="dropdown-item" href="#">Eye Care</a>
+        <a class="dropdown-item" href="#">Digestion And Immunity</a>
+        <a class="dropdown-item" href="#">Hip And Joint Care</a>
+        <a class="dropdown-item" href="#">Dental Care</a>
+        <a class="dropdown-item" href="#">Calcium Supplements</a>
+        <a class="dropdown-item" href="#">Ear Care</a>
+        <a class="dropdown-item" href="#">Deworming</a>
+        <a class="dropdown-item" href="#">Tick And Flea Solutions</a>
+        <a class="dropdown-item" href="#">Antibiotics</a>
+      </div>
+      <div class="col-md-3">
+        <h6 class="dropdown-header">Dog beds & mats</h6>
+        <a class="dropdown-item" href="#">Dog Beds</a>
+        <a class="dropdown-item" href="#">Dog Cushions</a>
+        <a class="dropdown-item" href="#">Dog Blankets</a>
+        <a class="dropdown-item" href="#">Dog Mats</a>
+        <a class="dropdown-item" href="#">Wooden Furniture</a>
+        <a class="dropdown-item" href="#">Dog Tents</a>
+      </div>
+    </div>
+  </ul>
+</li>
+
+
+  <ul class="nav category-nav justify-content-center">
+
+
+  <li class="nav-item dropdown d-flex align-items-center">
+  
+  <!-- Dog link -->
+  <a class="nav-link" href="{% url 'smallpets' %}">
+    Small Pets
+  </a>
+
+  <!-- Dropdown toggle (on same line) -->
+  <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+
+  <!-- Dropdown menu -->
+  <ul class="dropdown-menu p-4" style="width:400px;">
+   
+
+ 
+
+    <div class="row">
+      <div class="col-md-2">
+        <h6 class="dropdown-header">Small Pets</h6>
+        <a class="dropdown-item" href="#">Hamsters</a>
+        <a class="dropdown-item" href="#">Guinea Pigs</a>
+        <a class="dropdown-item" href="#">Rabbits</a>
+        <a class="dropdown-item" href="#">Rats</a>
+        <a class="dropdown-item" href="#"> Fish</a>
+       
+      </div>
+
+
+ 
+
+    </ul>
+    </li>
+
+
+    
+  <ul class="nav category-nav justify-content-center">
+
+
+  <li class="nav-item dropdown d-flex align-items-center">
+  
+  <!-- Dog link -->
+  <a class="nav-link" href="{% url 'petservice' %}">
+    Pet Service
+  </a>
+
+  <!-- Dropdown toggle (on same line) -->
+  <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+
+  <!-- Dropdown menu -->
+  <ul class="dropdown-menu p-4" style="width:900px; margin: 10px 0;">
+   
+
+
+
+ 
+
+    <div class="row">
+      <div class="col-md-2">
+        <h6 class="dropdown-header">pet services</h6>
+        <a class="dropdown-item" href="#">Grooming saloon</a>
+        <a class="dropdown-item" href="#">Training classes</a>
+        <a class="dropdown-item" href="#">Pet Hostel Boarding</a>
+        <a class="dropdown-item" href="#">Doggie Day Camb</a>
+        <a class="dropdown-item" href="#"> Veterniary care</a>
+       
+      </div>
+
+
+ <div class="col-md-2">
+        <h6 class="dropdown-header">Adaption</h6>
+        <a class="dropdown-item" href="#">Pet adaption</a>
+        <a class="dropdown-item" href="#">Pet Plazoo Charities</a>
+        
+       
+ </div>
+    </div>
+  </ul>
+  </ul>
+
+    
+    <li class="nav-item dropdown d-flex align-items-center">
+  
+  <!-- Dog link --
+  <a class="nav-link" href="#">
+    Shop by Brand
+  </a>
+  <!-- Dropdown toggle (on same line) --
+  <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+
+  <!-- Dropdown menu --
+  <ul class="dropdown-menu p-4" style="width:900px; margin: 10px 0;">
+   <ul class="dropdown-menu" aria-labelledby="shopByBrandDropdown">
+        {% for brand in brands %}
+        <li>
+            <img src="{{ brand.image.url }}" alt="{{ brand.name }}" class="dropdown-brand-img" />
+        </li>
+        {% endfor %}
+    </ul>
+</li>-->
+
+
+
+<li class="nav-item dropdown d-flex align-items-center">
+    <a class="nav-link dropdown-toggle"  role="button" id="shopByBrandDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        Shop by Brand
+    </a>
+    <ul class="dropdown-menu p-4" style="width:1200px; margin: 10px 0;" aria-labelledby="shopByBrandDropdown">
+        {% for brand in brands %}
+        <li class="d-inline-block m-2">
+            <img src="{{ brand.image.url }}" alt="{{ brand.name }}" class="dropdown-brand-img" />
+        </li>
+        {% endfor %}
+    </ul>
+</li>
+
+
+      
+      <li class="nav-item"><a class="nav-link" href="#">Shop by Breed</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'vetdoctor' %}">Consult a Vet</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container my-4">
+  {% block content %}{% endblock %}
+</div>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+
+      <!-- Column 1: Logo -->
+      <div class="col-md-2 col-6 footer-col">
+        {% if footer_logo and footer_logo.logo %}
+          <img src="{{ footer_logo.logo.url }}" alt="PetPalooza Logo" class="footer-logo">
+        {% endif %}
+        <h5 class="footer-title">PetPalooza</h5>
+         <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 2: PetPalooza Links --
+      <div class="col-md-2 col-6 footer-col">
+        <h6 class="footer-heading">PetPalooza</h6>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>-->
+
+      <!-- Column 3: Categories -->
+      <div class="col-md-2 col-6 footer-col" style="margin-top:90px;">
+        <h5 class="footer-heading">Categories</h5>
+        <ul>
+          <li><a href="#">Dog</a></li>
+          <li><a href="#">Cat</a></li>
+          <li><a href="#">Fish</a></li>
+          <li><a href="#">Rats</a></li>
+          <li><a href="#">Rabbits</a></li>
+          <li><a href="#">Hamsters</a></li>
+          <li><a href="#">Guinea pigs</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Support + Socials -->
+      <div class="col-md-3 col-6 footer-col" style="margin-top: 90px;">
+        <h5 class="footer-heading">Support</h5>
+        <ul>
+          <li><a href="#">Privacy policy</a></li>
+          <li><a href="#">Refund & returns policy</a></li>
+          <li><a href="#">Shipping policy</a></li>
+          <li><a href="#">Terms & conditions</a></li>
+        </ul>
+      </div>
+
+
+
+<!----
+  <div class="col-md-2 col-6 footer-col" style="margin-top: 80px;">
+        <h5 class="footer-heading mt-3">Follow</h5>
+        <div class="social-icons">
+          {% for icon in social_icons %}
+            <img src="{{ icon.icon.url }}" alt="{{ icon.name }}">
+          {% endfor %}
+        </div>-->
+
+
+        <div class="col-md-2 col-6 footer-col" style="margin-top: 80px;">
+  <div class="d-flex align-items-center">
+    <h5 class="footer-heading mt-3 me-2">Follow</h5>
+    <div class="social-icons d-flex">
+      {% for icon in social_icons %}
+        <img src="{{ icon.icon.url }}" alt="{{ icon.name }}" class="mx-1" style="width:24px; height:24px;">
+      {% endfor %}
+    </div>
+  </div>
+
+
+
+
+
+
+        <h5 class="footer-heading mt-3">Get in Touch</h5>
+        <p>Call: +91-1234567890</p>
+        <p>Email: support@petpalooza.com</p>
+      </div>
+      
+      <!-- Column 5: Subscribe -->
+      <div class="col-md-2 col-12 footer-col" style="margin-top: 90px; margin-left: 35px;">
+        <h5 class="footer-heading">For Subscribe,</h5>
+        <form class="subscribe-form">
+          <input type="email" placeholder="Email">
+          <button type="submit">Subscribe Now</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

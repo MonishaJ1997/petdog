@@ -1,0 +1,485 @@
+ {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+     
+    .star {
+      font-size: 18px;
+      color: grey;
+    }
+    .star.filled {
+      color: gold;
+    }
+    .promo-img {
+      border-radius: 10px;
+      margin-bottom: 15px;
+      width: 100%;
+      height: auto;
+    }
+
+    
+
+/* General Dropdown Placement & Animation */
+.filter-dropdown {
+  display: none;
+  position: absolute;
+  top: 58px; /* Adjust depending on your button height */
+  width: 260px;
+  background: #fff;
+  border: 2px solid #222;
+  border-radius: 7px;
+  padding: 24px 16px;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Show the dropdown */
+.filter-dropdown.show {
+  display: block;
+}
+
+.filter-section {
+  margin-bottom: 32px;
+
+}
+
+.filter-title {
+  font-weight: 700;
+  font-size: 1.3em;
+  margin-bottom: 12px;
+}
+
+.filter-options {
+  background: #ececec;
+  padding: 12px 8px;
+  border-radius: 5px;
+  margin-bottom: 4px;
+}
+
+.filter-options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 0;
+  font-size: 1.05em;
+}
+
+.filter-icon {
+  font-size: 1.32em;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .filter-dropdown {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100vw;
+    border-radius: 0 0 8px 8px;
+    border-width: 2px 0 2px 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .filter-dropdown {
+    padding: 12px 2vw;
+  }
+  .filter-title {
+    font-size: 1.07em;
+  }
+}
+   .cardss{
+    border: 1px solid black;
+    border-radius: none !important;
+   }
+
+
+
+
+/*
+.dog-green-bg {
+    background: #90ee90;
+    min-height: 320px;
+    padding: 36px 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.dog-green-img {
+    max-height: 210px;
+    width: auto;
+    margin: 0 10px;
+}
+.dog-green-center {
+    flex: 1 1 0;
+}
+.dog-green-text {
+    font-weight: 700;
+    font-size: 2em;
+    color: #222;
+}
+.dog-green-pagination {
+    margin-top: 18px;
+    margin-bottom: 0;
+}*/
+
+
+
+.dog-green-bg {
+  background: #98fb98;
+  min-height: 260px;
+  padding: 36px 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 1200px;
+  margin: 10px auto;
+  margin-bottom: 20px;
+}
+
+.dog-green-img-col {
+  max-width: 260px;
+}
+
+.dog-green-img {
+  max-height: 250px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.dog-green-center {
+  min-width: 220px;
+}
+
+.dog-green-text {
+  font-weight: 700;
+  font-size: 1.1em;
+  color: #222;
+}
+
+/* Responsive - stack on small screens */
+@media (max-width: 900px) {
+  .dog-green-bg {
+    flex-direction: column;
+    text-align: center;
+    padding: 22px 3vw;
+    gap: 8px;
+  }
+  .dog-green-img {
+    max-height: 110px;
+    margin-bottom: 8px;
+  }
+  .dog-green-center {
+    font-size: 1em;
+    padding: 10px 0;
+  }
+}
+
+
+
+/* Responsive - Stack vertical on small screens 
+@media (max-width: 900px) {
+  .dog-green-bg {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 5vw;
+  }
+  .dog-green-img {
+    max-width: 90vw;
+    max-height: 130px;
+    margin-bottom: 12px;
+  }
+  .dog-green-center {
+    padding: 10px 0;
+  }
+}
+
+*/
+
+
+
+  </style>
+</head>
+<body class="bg-light">
+  <p>
+  <b><a href="{% url 'home' %}" style="color: black;">Home</a></b> / Dog
+</p>
+
+<div class="container-fluid mt-3">
+  <div class="row">
+
+    <!-- LEFT FILTERS + BANNERS -->
+    <div class="col-md-3 col-12 mb-3">
+      <!--<button class="btn btn-outline-dark w-100 mb-3">Filters</button>-->
+
+
+      <button id="filterBtn" class="btn  w-50 mb-3" style="border: 1px solid black;">
+  <i class="fa-solid fa-sliders"></i> Filters ▼
+</button>
+
+
+<p style="font-weight: bold;">Top Deals</p>
+<!-- Filter Dropdown (Hidden by default) -->
+<div id="filterDropdown" class="filter-dropdown">
+  <div class="filter-section">
+    <div class="filter-title">Brand &gt;</div>
+    <div class="filter-options">
+      <label><input type="checkbox" /> Aeolus</label>
+      <label><input type="checkbox" /> All For Paws</label>
+      <label><input type="checkbox" /> Arden Grange</label>
+      <label><input type="checkbox" /> Bayer</label>
+      <label><input type="checkbox" /> Beaphar</label>
+    </div>
+  </div>
+  <div class="filter-section">
+    <div class="filter-title">Size &gt;</div>
+    <div class="filter-options">
+      <label><input type="checkbox" /> X Small</label>
+      <label><input type="checkbox" /> S</label>
+      <label><input type="checkbox" /> M</label>
+      <label><input type="checkbox" /> Medium</label>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+ <div class="filter-section">
+    <div class="filter-title">Breed &gt;</div>
+    <div class="filter-options">
+      <label><input type="checkbox" /> Beagle</label>
+      <label><input type="checkbox" /> Golden retriever</label>
+      <label><input type="checkbox" /> German Stepherd</label>
+      <label><input type="checkbox" /> Labrador</label>
+    </div>
+  </div>
+
+
+
+ <div class="filter-section">
+    <div class="filter-title">Life stage&gt;</div>
+    <div class="filter-options">
+      <label><input type="checkbox" /> Puppy</label>
+      <label><input type="checkbox" /> Adultdog</label>
+      <label><input type="checkbox" /> Senior dog</label>
+      <label><input type="checkbox" /> Adult cat</label>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script>
+const btn = document.getElementById('filterBtn');
+const dropdown = document.getElementById('filterDropdown');
+
+// Toggle dropdown on button click
+btn.addEventListener('click', function() {
+  dropdown.classList.toggle('show');
+});
+
+// Optional: Hide dropdown on outside click
+window.addEventListener('click', function(e) {
+  if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.classList.remove('show');
+  }
+});
+</script>
+
+      {% for banner in banners %}
+        <div>
+          <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="promo-img">
+          <h6 class="fw-bold">{{ banner.title }}</h6>
+          <p class="text-muted small">{{ banner.subtitle }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- RIGHT PRODUCTS -->
+    <div class="col-md-9 col-12">
+      
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold margin-bottom:1px solid black">Dog</h3>
+
+
+
+        <!-- Sort By -->
+        <form method="get">
+           
+          <select name="sort" class="form-select" onchange="this.form.submit()">
+            <option value="bestsellers" {% if sort_by == "bestsellers" %}selected{% endif %}>Sort BY</option>
+            <option value="bestsellers" {% if sort_by == "bestsellers" %}selected{% endif %}>Sort by</option>
+            <option value="relevance" {% if sort_by == "relevance" %}selected{% endif %}>Relevance</option>
+            <option value="price_low" {% if sort_by == "price_low" %}selected{% endif %}>Price: Low - High</option>
+            <option value="price_high" {% if sort_by == "price_high" %}selected{% endif %}>Price: High - Low</option>
+            <option value="new" {% if sort_by == "new" %}selected{% endif %}>New Arrivals</option>
+            <option value="top_rated" {% if sort_by == "top_rated" %}selected{% endif %}>Top Rated</option>
+          </select>
+        </form>
+      </div>
+
+      <div class="row g-3">
+        {% for product in products %}
+          <div class="col-md-4 col-sm-6 col-12">
+            <div class="cardss h-100  p-2">
+              <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height:200px; object-fit:contain;">
+
+              <div class="card-body">
+                <h6 class="card-title fw-bold">{{ product.name }}</h6>
+                <p class="small text-muted">{{ product.description }}</p>
+
+                <!-- Rating -->
+               <div>
+  {% for i in "12345" %}
+    {% if forloop.counter <= product.rating %}
+      <span class="star filled">&#9733;</span>
+    {% else %}
+      <span class="star">&#9733;</span>
+    {% endif %}
+  {% endfor %}
+  <small>({{ product.reviews_count }})</small>
+</div>
+
+
+                <p class="fw-bold mt-2">₹ {{ product.price }}</p>
+                <span class="badge bg-dark">{{ product.weight }}</span>
+              </div>
+<!----
+              <div class="card-footer bg-white">
+                <button class="btn btn-primary w-100">Add to Cart</button>
+              </div>-->
+
+<div class="card-footer bg-white">
+  <a href="{% url 'product_detail' product.id %}" class="btn  mt-2 w-100 fw-bold" style="background-color: #1c57f8; color: white;">
+    Add to Cart
+  </a>
+</div>
+
+
+
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!----
+<div class="container-fluid p-0">
+  <div class="dog-green-bg d-flex align-items-center justify-content-between flex-wrap">
+    <div class="left-img-container">
+      {% if card.left_image %}
+        <img src="{{ card.left_image.url }}" alt="Left Dog" class="dog-green-img img-fluid" />
+      {% endif %}
+    </div>
+    <div class="dog-green-center text-center flex-fill px-2">
+      <h2 class="dog-green-text mb-0">
+        A balanced dog diet should consist of protein, fats,<br>
+        carbohydrates, vitamins, and minerals, along with<br>
+        plenty of fresh water.
+      </h2>
+    </div>
+    <div class="right-img-container">
+      {% if card.right_image %}
+        <img src="{{ card.right_image.url }}" alt="Right Dog" class="dog-green-img img-fluid" />
+      {% endif %}
+    </div>
+  </div>-->
+
+
+  <!-- Pagination below, right aligned -->
+  <div class="d-flex justify-content-end">
+    <nav>
+      <ul class="pagination dog-green-pagination">
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item"><span class="page-link">...</span></li>
+        <li class="page-item"><a class="page-link" href="#">25</a></li>
+        <li class="page-item"><a class="page-link" href="#"><span aria-hidden="true">&rsaquo;</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<!----
+<div class="dog-green-bg d-flex align-items-center justify-content-between flex-wrap">
+    <div class="left-img-container">
+      {% if card.left_image %}
+        <img src="{{ card.left_image.url }}" alt="Left Dog" class="dog-green-img img-fluid" />
+      {% endif %}
+    </div>
+    <div class="dog-green-center flex-fill text-center px-2">
+      <h4 class="dog-green-text mb-0">
+        A balanced dog diet should consist of protein, fats,<br>
+        carbohydrates, vitamins, and minerals, along with<br>
+        plenty of fresh water.
+      </h4>
+    </div>
+    <div class="right-img-container">
+      {% if card.right_image %}
+        <img src="{{ card.right_image.url }}" alt="Right Dog" class="dog-green-img img-fluid" />
+      {% endif %}
+    </div>
+</div>-->
+
+
+
+<div class="dog-green-bg d-flex flex-row align-items-center justify-content-between">
+  <div class="dog-green-img-col flex-shrink-0 px-2 text-center">
+    {% if card.left_image %}
+      <img src="{{ card.left_image.url }}" alt="Left Dog" class="dog-green-img img-fluid" />
+    {% endif %}
+  </div>
+  <div class="dog-green-center flex-grow-1 px-2 d-flex flex-column justify-content-center text-center">
+    <h2 class="dog-green-text mb-0">
+      A balanced dog diet should consist of protein, fats,<br>
+      carbohydrates, vitamins, and minerals, along with<br>
+      plenty of fresh water.
+    </h2>
+  </div>
+  <div class="dog-green-img-col flex-shrink-0 px-2 text-center">
+    {% if card.right_image %}
+      <img src="{{ card.right_image.url }}" alt="Right Dog" class="dog-green-img img-fluid" />
+    {% endif %}
+  </div>
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+
+    
+</body>
+</html>
+
+{% endblock %}

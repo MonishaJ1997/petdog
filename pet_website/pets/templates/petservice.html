@@ -1,0 +1,438 @@
+ {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+
+.banner {
+    width: 100vw;
+    height: 340px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-text {
+    color: #fff;
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+    top: 59%;
+    transform: translateY(-50%);
+}
+
+.services {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 0 auto;
+    margin-top: -130px;
+    padding: 45px 20px 25px 20px;
+    background: #fff;
+    border-radius: 36px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.10);
+    width: 90vw;
+    position: relative;
+    z-index: 2;
+    border: 1px solid black;
+box-shadow: 0 1px 5px rgba(0,0,0,0.12);}
+
+.service-card {
+    background:#98fb98;
+   
+    padding: 35px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.12);
+}
+
+.service-card .fa {
+    font-size: 2rem;
+    color: #1c1c1c;
+    margin-bottom: 13px;
+}
+
+.service-title {
+    font-size: 1rem;
+    color: #101010;
+    font-weight: bold;
+    text-align: center;
+}
+
+@media (max-width: 900px) {
+    .banner {
+        height: 180px;
+    }
+    .logo-text {
+        font-size: 1.8rem;
+        top: 50%;
+    }
+    .services {
+        flex-direction: column;
+        gap: 13px;
+        margin-top: -40px;
+        padding: 18px 7px;
+        width: 99vw;
+    }
+    .service-card {
+        width: 95vw;
+        padding: 19px 11px;
+    }
+}
+
+
+.header-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 40px 40px 0 40px;
+}
+.header-left {
+    max-width: 80%;
+    
+}
+.header-left h1 {
+    font-size: 2.3rem;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+.header-left p {
+   
+    color: #212121;
+    margin: 0;
+    line-height: 1.3;
+}
+.header-right {
+    text-align: right;
+    min-width: 180px;
+    line-height: 1.1;
+    margin-top: 20px;
+}
+.cus-label {
+    color:#1c57f8 ;
+    font-size: 1.11rem;
+    font-weight: 700;
+}
+.cus-number {
+    color: #1c57f8;
+    font-size: 1.11rem;
+    font-weight: 700;
+    margin-top: 4px;
+    display: block;
+}
+
+
+
+
+
+
+
+
+.cards-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 30px;
+    margin-top: 20px;
+   padding: 0 40px;
+    height: 300px;
+    width: 1200px;
+}
+.joined-cards {
+    display: flex;
+    flex-direction:row;
+   max-width: 900px;
+   width: 900px;
+    overflow: hidden;
+    background: #1c57f8;
+}
+.card.left.joined {
+   background: #1c57f8;
+    color: #fff;
+    
+    border: none;
+    min-width: 200px;
+    max-width: 400px;
+    width: 400px;
+    height: 200px;
+    
+    padding: 38px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+   margin-top: 50px;
+   text-align: center;
+}
+.card.left.joined h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: 700;
+}
+.card.left.joined p {
+    font-size: 1rem;
+    
+}
+.card.left.joined button {
+    background: #fff;
+    color: #181818;
+    font-size: 1.35rem;
+    border: none;
+    border-radius: 30px;
+    padding: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 60%;
+    margin:10px auto;
+}
+.card.left.joined button:hover{
+    background-color: #1c57f8;
+    border: 1px solid black;
+}
+.center-image.joined {
+    background: #0063f7;
+    border-radius: 0 10px 10px 0;
+    min-width: 340px;
+    min-height: 360px;
+    width: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0 18px;
+}
+.center-image.joined img {
+    width: 400px;
+    height: 400px;
+   
+    object-fit: cover;
+    
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.image-placeholder {
+    color: #888;
+    font-size: 1.2rem;
+    padding: 44px;
+    background: #ececec;
+    border-radius: 10px;
+}
+.card.right {
+   
+    background: #98fb98;
+    color: #181818;
+    padding: 38px 22px;
+    text-align: center;
+    min-width: 320px;
+    max-width: 345px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.card.right h2 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+.card.right p {
+    font-size: 1rem;
+    margin-bottom: 24px;
+    font-weight: bold;
+}
+.card.right button {
+    background: #1c57f8;
+    color: #fff;
+    font-size: 1.35rem;
+    border: none;
+    border-radius: 30px;
+    padding: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 200px;
+    margin: 10px auto;
+}
+
+.card .right button:hover{
+    background-color: #98fb98;
+    border: 1px solid black
+}
+.container {
+    display: flex;
+    gap: 60px;
+    flex-wrap: wrap;
+    max-width: 1260px;
+    justify-content: center;
+  }
+  .cards {
+    border: 1.5px solid #000;
+    width: 320px;
+    padding: 30px 20px;
+    text-align: center;
+    box-sizing: border-box;
+    height: 350px;
+  }
+  .cards p {
+    margin: 15px 0 30px;
+    font-size: 1.1rem;
+  }
+  .btns{
+    background-color: #004fff;
+    border: none;
+    color: white;
+    padding: 12px 36px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: none;
+  }
+  .btns:hover{
+    background-color: white;
+    color: black;
+    border:1px solid black;
+  }
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      align-items: center;
+    }
+    .card {
+      width: 90%;
+      max-width: 400px;
+    }
+  }
+
+
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css");
+
+
+   </style>
+</head>
+<body>
+  
+  <div class="banner"
+         {% if pet %}style="background-image: url('{{ pet.background_image.url }}');"{% endif %}>
+        
+    </div>
+    <div class="services">
+        {% for card in service_cards %}
+            <div class="service-card">
+                <i class="fa {{ card.icon }}"></i>
+                <div class="service-title">{{ card.title }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+
+
+
+
+  <div class="header-row">
+        <div class="header-left">
+            <h4 style="font-weight: bold;">Pet Services</h4>
+            <p style="font-size: 15px;">
+                Whether it’s a pamper day, playdate, sleepover, training class or veterinary visit, we provide the best in pet services with highly trained, passionate associates. From our pet hotel & doggie day camp as an alternative to pet sitting, to our dog training and grooming as an alternative to DIY, our services are conveniently located inside most of our PetSmart stores
+            </p>
+        </div>
+        <div class="header-right">
+            <span class="cus-label">customer service</span><br>
+            <span class="cus-number">+91-1234567890</span>
+        </div>
+    </div>
+    <!-- Cards row --
+    <div class="cards-row">
+        <div class="card left">
+            <h2>Summer Special</h2>
+            <p>
+                Upgrade a salon visit or overnight stay <br>
+                with a strawberry ice cream spritz, $350+ <br>
+                in coupon savings & more
+            </p>
+            <button>Book Now</button>
+        </div>
+        <div class="center-image">
+            {% if center_image %}
+                <img src="{{ center_image.image.url }}" alt="Pet Dog and Cat">
+            {% else %}
+                <div class="image-placeholder">No image available.</div>
+            {% endif %}
+        </div>
+        <div class="card right">
+            <h2>Monthly specials</h2>
+            <p>
+                Check out deals, offers & events <br>
+                in grooming, boarding, day camp <br>
+                & training
+            </p>
+            <button>Get Details</button>
+        </div>
+    </div>-->
+
+
+
+
+
+     <div class="cards-row">
+        <div class="joined-cards">
+            <div class="card left joined">
+                <h2>Summer Special</h2>
+                <p>
+                    Upgrade a salon visit or overnight stay 
+                    with a strawberry ice cream spritz, $350+ 
+                    in coupon savings & more
+                </p>
+                <button>Book Now</button>
+            </div>
+            <div class="center-image joined">
+                {% if center_image %}
+                    <img src="{{ center_image.image.url }}" alt="Pet Dog and Cat">
+                {% else %}
+                    <div class="image-placeholder">No image available.</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card right">
+            <h2>Monthly specials</h2>
+            <p>
+                Check out deals, offers & events 
+                in grooming, boarding, day camp 
+                & training
+            </p>
+            <button>Get Details</button>
+        </div>
+    </div>
+
+<div class="container">
+    <div class="cards">
+      <p>Yappy Hour<br />$5 OFF on salon walk-in services<br />Monday Thru Friday</p>
+      <button class="btns">Learn more</button>
+    </div>
+    <div class="cards">
+      <p>ONLY $129 any 6-wk. Training Class<br />(that's $21.50 a class) valid thru 7/6^</p>
+      <button class="btns">Enroll Now</button>
+    </div>
+    <div class="cards">
+      <p>Traveling without your pet this summer?<br />Suite upgrades and fun add-ons make their stay even more special.</p>
+      <button class="btns">Book Stay</button>
+    </div>
+  </div>
+
+</body></html>
+{% endblock %}

@@ -1,0 +1,1440 @@
+
+ {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+ <style>
+    .product-detail {
+  display: flex;
+  gap: 40px;
+  margin: 20px;
+}
+
+/* Gallery */
+.gallery { flex: 1; }
+.large-img img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Thumbnails */
+.thumb-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.thumbs {
+  display: flex;
+  overflow: hidden;
+  flex: 1;
+  gap: 10px;
+}
+.thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.thumb.active { border-color: #007bff; }
+
+/* Arrows */
+.thumb-arrow {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+/* Dots */
+.dots { text-align: center; margin-top: 10px; }
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px;
+  background: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.dot.active { background: #007bff; }
+
+/* Info */
+.info { flex: 1; }
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+.qty button {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ddd;
+  background: #f8f8f8;
+  cursor: pointer;
+}
+.qty input {
+  width: 40px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+/* Buttons */
+.actions { display: flex; gap: 15px; }
+.btn {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 6px;
+}
+.btn.add { background: #007bff; color: white; }
+.btn.buy { background: black; color: white; }
+
+
+/*
+ .left {
+      flex: 1;
+      padding: 40px;
+      background: #fff;
+    }
+
+    .left h2 {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .left h3 {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .left p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .right {
+      flex: 1;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("dog-image.jpg") center/cover no-repeat;
+      height: 100vh;
+    }
+
+    .overlay {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 40%;
+      background: linear-gradient(to bottom, #f37f2c, #d95f00);
+      padding: 40px 20px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      text-align: center;
+    }
+
+    .overlay h4 {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .overlay img {
+      width: 80px;
+      margin: 0 auto 10px auto;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        flex-direction: column;
+      }
+      .right {
+        height: 400px;
+      }
+      .overlay {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+    }
+
+
+     .left { flex: 1; padding: 40px; background: #fff; }
+    .right { flex: 1; position: relative; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    
+    
+    
+    
+    
+    .right img { width: 100%; height: 100%; object-fit: cover; }
+ */
+
+
+
+
+ .containersed {
+  display: flex;
+  min-height: 100vh; /* full height */
+}
+
+.left {
+  flex: 1;
+  padding: 40px;
+  background: #fff;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f4f4;
+}
+
+.right img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+}
+
+ 
+
+ .review-container {
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+    }
+
+    /* Star styles */
+    .stars span {
+      font-size: 25px;
+      cursor: pointer;
+      color: grey;
+      transition: color 0.3s;
+    }
+    .stars span.active {
+      color: gold;
+    }
+
+    /* Static stars on left (non-clickable) */
+    .static-stars span {
+      font-size: 25px;
+      color: gold;
+      cursor: default;
+    }
+
+    .submit-btn {
+      background-color: blue;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 8px 20px;
+    }
+
+    @media (max-width: 768px) {
+      .review-container {
+        flex-direction: column;
+      }
+    }
+ 
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 220px;
+  padding: 15px;
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.product-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+}
+
+.product-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 10px 0;
+  height: 40px;
+  overflow: hidden;
+}
+
+.stars {
+  margin: 5px 0;
+}
+.star {
+  font-size: 18px;
+}
+.star.filled {
+  color: gold;
+}
+.star.empty {
+  color: #ccc;
+}
+
+.price {
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.quantity {
+  background: black;
+  color: white;
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.add-to-cart {
+  background: #0066ff;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.add-to-cart:hover {
+  background: #004ecc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-card {
+    width: 45%;
+  }
+}
+@media (max-width: 480px) {
+  .product-card {
+    width: 100%;
+  }
+}
+
+
+.containersss {
+  display: flex;
+  gap: 30px;        /* space between banner & carousel */
+  align-items: flex-start;
+}
+
+/* banner */
+.banner {
+  flex: 0 0 25%;    /* dog image column is 30% */
+  text-align: center;
+}
+.dog-img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* products area */
+.products {
+  flex: 1 1 70%;
+  position: relative;   /* arrows positioned relative to this */
+  min-width: 0;         /* allow flex shrink */
+}
+
+/* viewport that hides overflow of sliding track */
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* sliding track */
+.carousel {
+  display: flex;
+  gap: 20px;                 /* gap between cards */
+  transition: transform 400ms ease;
+  will-change: transform;
+  padding-bottom: 6px;
+}
+
+/* exact 4 cards visible: calc takes total gap into account (3 gaps of 20px = 60px) */
+.product-card {
+  flex: 0 0 calc((100% - 60px) / 4); /* 4 cards, minus gaps */
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 6px 14px rgba(19,21,26,0.04);
+}
+
+/* product image */
+.product-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display:block;
+  margin-bottom: 8px;
+}
+
+/* title / stars / price */
+.title { font-weight: 700; font-size: 14px; margin: 6px 0; color:#222; }
+.stars { font-size: 16px; margin: 6px 0; line-height:1; }
+.star-filled { color: #FFD700; }  /* gold */
+.star-empty { color: #ccc; }      /* grey */
+.price { font-weight: 700; color: #111; margin-top:6px; }
+
+/* arrows (above cards) */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background:#1c57f8;     /* blue background */
+  color: #fff;             /* white icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  z-index: 999;            /* make sure it's above the cards */
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+  font-size: 20px;
+}
+
+/* arrow positions inside the products area so not clipped */
+.arrow.left { left: -10px; }
+.arrow.right { right: -10px; }
+
+/* hide with display:none; we toggle that from JS */
+.arrow[style*="display:none"] { display: none !important; }
+
+/* small screens responsiveness */
+@media (max-width: 900px) {
+  .banner { flex: 0 0 35%; }
+  .product-card { flex: 0 0 calc((100% - 40px) / 2); } /* 2 cards on medium screens */
+}
+@media (max-width: 520px) {
+  .container { flex-direction: column; gap: 16px; }
+  .banner { width: 100%; flex: none; }
+  .product-card { flex: 0 0 100%; }
+  .arrow { display: none; } /* hide arrows on tiny screens (you can enable touch swipe later) */
+}
+
+
+ .container {
+      display: flex;
+      gap: 30px;
+      padding: 40px;
+      flex-wrap: wrap;
+    }
+
+    /* LEFT SIDE */
+    .left {
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .big-image {
+      width: 100%;
+      max-height: 450px;
+      object-fit: contain;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .thumbnail-wrapper {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+      position: relative;
+    }
+
+    .thumbnails {
+      display: flex;
+      gap: 10px;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .thumbnails img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 6px;
+    }
+
+    .thumbnails img.active {
+      border: 2px solid #007bff;
+    }
+
+    .arrow {
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .arrow:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      gap: 8px;
+    }
+
+    .dots span {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ccc;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .dots span.active {
+      background: #007bff;
+    }
+.right {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  gap: 12px;             /* Space between each block */
+}
+
+.right h2 {
+  margin: 0 0 10px 0;
+  font-size: 22px;
+  line-height: 1.4;
+}
+
+.right p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.right ul {
+  margin: 0;
+  padding-left: 18px; /* indent bullets */
+  line-height: 1.5;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+    /* RIGHT SIDE */
+    .right {
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .right h2 {
+      margin-top: 0;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: bold;
+      color: #007bff;
+      margin: 15px 0;
+    }
+
+    .sizes button {
+      margin-right: 10px;
+      padding: 6px 14px;
+      border: 1px solid #007bff;
+      border-radius: 5px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .sizes button.active {
+      background: #007bff;
+      color: #fff;
+    }
+
+    .quantity {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+    }
+
+    .quantity button {
+      width: 35px;
+      height: 35px;
+      font-size: 18px;
+      border: 1px solid #ddd;
+      background: #f7f7f7;
+      cursor: pointer;
+    }
+
+    .quantity input {
+      width: 50px;
+      text-align: center;
+      border: 1px solid #ddd;
+      margin: 0 5px;
+    }
+
+    .actions button {
+      padding: 12px 20px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .actions .cart {
+      background: #007bff;
+      color: white;
+    }
+
+    .actions .buy {
+      background: black;
+      color: white;
+    }
+
+    /* MEDIA QUERY */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .thumbnails img {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <!----
+<div class="product-detail">
+
+  <!-- LEFT: Image gallery --
+  <div class="gallery">
+    <!-- Large image --
+    <div class="large-img">
+      <img id="mainImage" src="{{ product.images.first.image.url }}" alt="{{ product.title }}">
+    </div>
+
+    <!-- Thumbnails carousel --
+    <div class="thumb-container">
+      <button class="thumb-arrow left" onclick="scrollThumbs(-1)">&#10094;</button>
+      <div class="thumbs" id="thumbs">
+       {% for image in product.images.all %}
+    <img src="{{ image.image.url }}" alt="{{ product.title }}">
+{% endfor %}
+
+      </div>
+      <button class="thumb-arrow right" onclick="scrollThumbs(1)">&#10095;</button>
+    </div>
+
+    <!-- Dots --
+    <div class="dots">
+      {% for img in product.images.all %}
+        <span class="dot {% if forloop.first %}active{% endif %}" onclick="changeImage('{{ img.image.url }}', {{ forloop.counter0 }})"></span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- RIGHT: Product info --
+  <div class="info">
+    <h2>{{ product.title }}</h2>
+    <p>{{ product.description }}</p>
+    <p><b>Brand:</b> {{ product.brand }}</p>
+    {% if product.coupon_code %}
+      <p><b>Coupon:</b> {{ product.coupon_code }}</p>
+    {% endif %}
+    <h3>₹ {{ product.price }}</h3>
+
+    <!-- Quantity selector --
+    <div class="qty">
+      <button type="button" onclick="changeQty(-1)">−</button>
+      <input id="quantity" type="text" value="1" readonly>
+      <button type="button" onclick="changeQty(1)">+</button>
+    </div>
+
+    <!-- Buttons --
+    <div class="actions">
+      <button class="btn add">Add to Cart</button>
+      <button class="btn buy">Buy Now</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentIndex = 0;
+
+function changeImage(src, index) {
+  document.getElementById("mainImage").src = src;
+  currentIndex = index;
+
+  // Update active thumb
+  document.querySelectorAll(".thumb").forEach((t,i) => {
+    t.classList.toggle("active", i === index);
+  });
+
+  // Update dots
+  document.querySelectorAll(".dot").forEach((d,i) => {
+    d.classList.toggle("active", i === index);
+  });
+}
+
+function scrollThumbs(dir) {
+  const thumbs = document.getElementById("thumbs");
+  const thumbWidth = thumbs.querySelector(".thumb").offsetWidth + 10; // include margin
+  thumbs.scrollBy({left: dir * thumbWidth, behavior: "smooth"});
+}
+
+// Quantity
+function changeQty(val) {
+  let qty = parseInt(document.getElementById("quantity").value);
+  qty = Math.max(1, qty + val);
+  document.getElementById("quantity").value = qty;
+}
+</script>-->
+
+
+
+
+
+<!----
+<div class="container my-5">
+  <div class="row">
+    
+    <!-- Left side: Images --
+    <div class="col-md-6">
+      <!-- Big Image --
+      <div class="main-image text-center mb-3">
+        <!----
+        {% if product.images.all %}
+          <img id="bigImage" src="{{ product.images.first.image.url }}" class="img-fluid rounded border" alt="{{ product.title }}" style="max-height:400px; object-fit:contain;">
+        {% endif %}--
+
+
+        {% if product.images.exists %}
+  <img id="bigImage" src="{{ product.images.first.image.url }}" class="img-fluid rounded border" alt="{{ product.title }}" style="max-height:400px; object-fit:contain;">
+{% endif %}
+
+      </div>
+
+      <!-- Thumbnails --
+      <div class="d-flex justify-content-center gap-2">
+        {% for img in product.images.all %}
+          <img src="{{ img.image.url }}" 
+               class="thumb border rounded" 
+               style="width:80px; height:80px; object-fit:cover; cursor:pointer;"
+               onclick="changeImage(this)">
+        {% endfor %}
+      </div>
+
+      <!-- Dots --
+      <div class="text-center mt-3">
+        {% for img in product.images.all %}
+          <span class="dot" onclick="showImage({{ forloop.counter0 }})"></span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Right side: Content --
+    <div class="col-md-6">
+      <h2 class="fw-bold">{{ product.title }}</h2>
+      <p class="text-muted mb-1">Brand: <strong>{{ product.brand }}</strong></p>
+      <p>{{ product.description }}</p>
+
+      <!-- Rating --
+      <div class="mb-2">
+        {% for i in "12345" %}
+          {% if forloop.counter <= product.rating %}
+            <span class="text-warning">&#9733;</span>
+          {% else %}
+            <span class="text-secondary">&#9733;</span>
+          {% endif %}
+        {% endfor %}
+        <small>({{ product.reviews_count|default:0 }} reviews)</small>
+      </div>
+
+      <!-- Price --
+      <h3 class="text-danger fw-bold">₹ {{ product.price }}</h3>
+
+      <!-- Coupon --
+      {% if product.coupon_code %}
+        <p><span class="badge bg-success">Use Code: {{ product.coupon_code }}</span></p>
+      {% endif %}
+
+      <!-- Quantity --
+      <div class="d-flex align-items-center my-3">
+        <button class="btn btn-outline-secondary" onclick="decreaseQty()">-</button>
+        <input type="text" id="quantity" class="form-control text-center mx-2" value="1" style="width:60px;" readonly>
+        <button class="btn btn-outline-secondary" onclick="increaseQty()">+</button>
+      </div>
+
+      <!-- Add to Cart --
+      <button class="btn btn-primary btn-lg w-100">Add to Cart</button>
+    </div>
+  </div>
+</div>-->
+
+
+
+
+
+<!----
+<div class="container my-5">
+  <div class="row">
+    
+    <!-- Left side: Images --
+    <div class="col-md-6">
+      
+      <!-- Big Image --
+      <div class="main-image text-center mb-3">
+        {% if product.images.exists %}
+          <img id="bigImage" src="{{ product.images.first.image.url }}" 
+               class="img-fluid rounded border" 
+               alt="{{ product.title }}" 
+               style="max-height:400px; object-fit:contain;">
+        {% else %}
+          <img id="bigImage" src="https://via.placeholder.com/400x400?text=No+Image"
+               class="img-fluid rounded border" 
+               alt="No Image" 
+               style="max-height:400px; object-fit:contain;">
+        {% endif %}
+      </div>
+
+      <!-- Thumbnails --
+      <div class="d-flex justify-content-center gap-2 flex-wrap">
+        {% for img in product.images.all %}
+          <img src="{{ img.image.url }}" 
+               class="thumb border rounded" 
+               style="width:80px; height:80px; object-fit:cover; cursor:pointer;"
+               onclick="changeImage('{{ img.image.url }}')">
+        {% endfor %}
+      </div>
+
+      <!-- Dots --
+      <div class="text-center mt-3">
+        {% for img in product.images.all %}
+          <span class="dot" onclick="changeImage('{{ img.image.url }}')">●</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Right side: Content --
+    <div class="col-md-6">
+      <h2 class="fw-bold">{{ product.title }}</h2>
+      <p class="text-muted mb-1">Brand: <strong>{{ product.brand }}</strong></p>
+      <p>{{ product.description }}</p>
+
+      <!-- Rating --
+      <div class="mb-2">
+        {% for i in "12345" %}
+          {% if forloop.counter <= product.rating %}
+            <span class="text-warning">&#9733;</span>
+          {% else %}
+            <span class="text-secondary">&#9733;</span>
+          {% endif %}
+        {% endfor %}
+        <small>({{ product.reviews_count|default:0 }} reviews)</small>
+      </div>
+
+      <!-- Price --
+      <h3 class="text-danger fw-bold">₹ {{ product.price }}</h3>
+
+      <!-- Coupon --
+      {% if product.coupon_code %}
+        <p><span class="badge bg-success">Use Code: {{ product.coupon_code }}</span></p>
+      {% endif %}
+
+      <!-- Quantity --
+      <div class="d-flex align-items-center my-3">
+        <button class="btn btn-outline-secondary" onclick="decreaseQty()">-</button>
+        <input type="text" id="quantity" 
+               class="form-control text-center mx-2" 
+               value="1" 
+               style="width:60px;" readonly>
+        <button class="btn btn-outline-secondary" onclick="increaseQty()">+</button>
+      </div>
+
+      <!-- Add to Cart --
+      <button class="btn btn-primary btn-lg w-50">Add to Cart</button>
+       <button class="btn  btn-buy" onclick="window.location.href='{% url 'buycart' %}'">Buy Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts --
+<script>
+  // Change big image when thumbnail clicked
+  function changeImage(imageUrl) {
+    document.getElementById("bigImage").src = imageUrl;
+  }
+
+  // Increase quantity
+  function increaseQty() {
+    let qtyInput = document.getElementById("quantity");
+    let value = parseInt(qtyInput.value);
+    qtyInput.value = value + 1;
+  }
+
+  // Decrease quantity
+  function decreaseQty() {
+    let qtyInput = document.getElementById("quantity");
+    let value = parseInt(qtyInput.value);
+    if (value > 1) {
+      qtyInput.value = value - 1;
+    }
+  }
+</script>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+  <!-- LEFT -->
+  <div class="left">
+    <img id="bigImage" src="{{ product.main_image.url }}" class="big-image" alt="Product">
+
+    <div class="thumbnail-wrapper">
+      <button class="arrow" id="leftArrow" disabled>&lt;</button>
+      <div class="thumbnails" id="thumbnailContainer">
+        {% for img in images %}
+          <img src="{{ img.url }}" {% if forloop.first %}class="active"{% endif %} onclick="changeImage({{ forloop.counter0 }})">
+        {% endfor %}
+      </div>
+      <button class="arrow" id="rightArrow">&gt;</button>
+    </div>
+
+    <div class="dots" id="dots">
+      {% for img in images %}
+        <span {% if forloop.first %}class="active"{% endif %} onclick="changeImage({{ forloop.counter0 }})"></span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- RIGHT (you can keep the same static content or fetch from another model later) -->
+  <div class="right">
+    <h2>Turkey, Chickpea & Sweet Potato | Small Breed 2Kg</h2>
+    <p><strong>Coupon code:</strong> 92921</p>
+    <p><strong>Brand:</strong> Zoe</p>
+    <p>
+      Quality sources of protein, including turkey and eggs, are at the foundation of this recipe. 
+      From “superfoods” like quinoa and berries to healthy fats and probiotics, Zoë dog food is created 
+      with carefully selected ingredients.
+    </p>
+    <ul>
+      <li>MADE IN CANADA</li>
+      <li>HEALTHY GRAINS: Quinoa, oats & barley</li>
+    </ul>
+    <p><strong>Importer:</strong> Maple pets international pvt ltd</p>
+    <p><strong>MRP:</strong> <span class="price">₹ 1,899.00</span> Inclusive of all taxes</p>
+
+    <div class="sizes">
+      <button onclick="selectSize(this)">1kg</button>
+      <button class="active" onclick="selectSize(this)">2kg</button>
+    </div>
+
+    <div class="quantity">
+      <button onclick="updateQty(-1)">-</button>
+      <input type="text" id="qty" value="1" readonly>
+      <button onclick="updateQty(1)">+</button>
+    </div>
+
+    <div class="actions">
+      <button class="cart">Add to cart</button>
+      <button class="btn  btn-buy" onclick="window.location.href='{% url 'buycart' %}'">Buy Now</button>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  const images = [
+    "{% for img in images %}{{ img.url }}{% if not forloop.last %}","{% endif %}{% endfor %}"
+  ];
+
+  let currentIndex = 0;
+
+  function changeImage(index) {
+    currentIndex = index;
+    document.getElementById("bigImage").src = images[index];
+
+    document.querySelectorAll(".thumbnails img").forEach((img,i)=>{
+      img.classList.toggle("active", i===index);
+    });
+
+    document.querySelectorAll(".dots span").forEach((dot,i)=>{
+      dot.classList.toggle("active", i===index);
+    });
+  }
+</script>
+
+
+
+
+
+<!----
+
+<div class="left">
+    <h2>Product Description</h2>
+
+    <h3>Fresh Dog Food<br>Small Breed Dog Food, Turkey, Chickpea & Sweet Potato</h3>
+    <p>Quality, Canadian sources of protein, including fresh turkey, turkey meal and chickpeas form the foundation of our recipe.</p>
+
+    <h3>Flaxseed, chia seed, salmon oil for healthy skin & coat</h3>
+    <p>This powerful combination of salmon oil, chia & flax ensures a diet rich in fatty acids to help your dog maintain a healthy skin & coat.</p>
+
+    <h3>Prebiotics & probiotics for a healthy digestive system</h3>
+    <p>Prebiotics & probiotics, along with ingredients rich in dietary fiber such as chickpeas, beans, oats and barley, help support a healthy digestive system.</p>
+
+    <h3>Rich in antioxidants to support a healthy immune system</h3>
+    <p>Berries and carrots, loaded with antioxidants and phytonutrients, along with vitamins & minerals help support a healthy immune system.</p>
+
+    <p><b>Zoe Small Breed Dog Food</b><br>
+    This dry dog food made with fresh deboned turkey is loaded with protein and helps maintain normal blood sugar level, and is loaded with antioxidants and minerals. Zoe believe in growing old with our pets, so our recipe is loaded with nutrients that help maintain a healthy life.</p>
+  </div>
+
+  <!-- Right Side --
+  
+       <div class="right">
+    {% if background %}
+      <img src="{{ background.image.url }}" alt="Dog Food Background">
+    {% else %}
+      <p>No background uploaded</p>
+    {% endif %}
+  </div>-->
+
+
+
+
+  <!-- Wrapper -->
+<div class="containersed">
+  
+  <!-- Left Side -->
+  <div class="left">
+    <h2>Product Description</h2>
+
+    <h3>Fresh Dog Food<br>Small Breed Dog Food, Turkey, Chickpea & Sweet Potato</h3>
+    <p>Quality, Canadian sources of protein, including fresh turkey, turkey meal and chickpeas form the foundation of our recipe.</p>
+
+    <h3>Flaxseed, chia seed, salmon oil for healthy skin & coat</h3>
+    <p>This powerful combination of salmon oil, chia & flax ensures a diet rich in fatty acids to help your dog maintain a healthy skin & coat.</p>
+
+    <h3>Prebiotics & probiotics for a healthy digestive system</h3>
+    <p>Prebiotics & probiotics, along with ingredients rich in dietary fiber such as chickpeas, beans, oats and barley, help support a healthy digestive system.</p>
+
+    <h3>Rich in antioxidants to support a healthy immune system</h3>
+    <p>Berries and carrots, loaded with antioxidants and phytonutrients, along with vitamins & minerals help support a healthy immune system.</p>
+
+    <p><b>Zoe Small Breed Dog Food</b><br>
+    This dry dog food made with fresh deboned turkey is loaded with protein and helps maintain normal blood sugar level, and is loaded with antioxidants and minerals. Zoe believe in growing old with our pets, so our recipe is loaded with nutrients that help maintain a healthy life.</p>
+  </div>
+
+  <!-- Right Side -->
+  <div class="right">
+    {% if background %}
+      <img src="{{ background.image.url }}" alt="Dog Food Background">
+    {% else %}
+      <p>No background uploaded</p>
+    {% endif %}
+  </div>
+
+</div>
+
+  
+  
+<div class="container review-container">
+  <div class="row">
+    
+    <!-- Left Side -->
+    <div class="col-md-6 border-end">
+      <h3>Customer Reviews</h3>
+
+      <!-- Default static stars -->
+      <div class="static-stars mb-2">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+      </div>
+      <p>23 reviews</p>
+
+      <!-- Example Rating Breakdown -->
+      <div>
+        <p>⭐⭐⭐⭐⭐</p>
+        <div class="progress mb-2">
+          <div class="progress-bar bg-warning" style="width: 70%"></div>
+        </div>
+        <p>⭐⭐⭐⭐</p>
+        <div class="progress mb-2">
+          <div class="progress-bar bg-warning" style="width: 20%"></div>
+        </div>
+        <p>⭐⭐⭐</p>
+        <div class="progress mb-2">
+          <div class="progress-bar bg-warning" style="width: 7%"></div>
+        </div>
+        <p>⭐⭐</p>
+        <div class="progress mb-2">
+          <div class="progress-bar bg-warning" style="width: 2%"></div>
+        </div>
+        <p>⭐</p>
+        <div class="progress mb-2">
+          <div class="progress-bar bg-warning" style="width: 1%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="col-md-6">
+      <h5><b>Be the first to review “Turkey, Chickpea & Sweet Potato | Small Breed 2Kg”</b></h5>
+      <p class="text-muted">Your email address will not be published. Required fields are marked <span class="text-danger">*</span></p>
+
+      <!-- Interactive Rating -->
+      <label>Your Rating <span class="text-danger">*</span></label>
+      <div class="stars mb-3" id="ratingStars">
+        <span data-index="1">☆</span>
+        <span data-index="2">☆</span>
+        <span data-index="3">☆</span>
+        <span data-index="4">☆</span>
+        <span data-index="5">☆</span>
+      </div>
+
+      <!-- Review Form -->
+      <form>
+        <div class="mb-3">
+          <label>Your Review <span class="text-danger">*</span></label>
+          <textarea class="form-control" rows="3" required></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label>Your Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label>Your Email <span class="text-danger">*</span></label>
+          <input type="email" class="form-control" required>
+        </div>
+
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="saveInfo">
+          <label class="form-check-label" for="saveInfo">
+            Save my name, email, and website in this browser for the next time I comment.
+          </label>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Interactive star rating toggle (only on right side)
+  document.querySelectorAll("#ratingStars span").forEach(star => {
+    star.addEventListener("click", function() {
+      this.classList.toggle("active");
+    });
+  });
+</script>
+
+
+
+<!----
+
+<h2 style="text-align:center; margin-top:40px; margin-bottom:20px;">
+  Top Related Calming Products
+</h2>
+
+<div class="product-container">
+  {% for p in products %}
+    <div class="product-card">
+      <img src="{{ p.image.url }}" alt="{{ p.title }}">
+      <h4 class="product-title">{{ p.title }}</h4>
+
+      <!-- Star rating --
+      <div class="stars">
+        {% for i in "12345" %}
+          {% if forloop.counter <= p.rating %}
+            <span class="star filled">★</span>
+          {% else %}
+            <span class="star empty">★</span>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <p class="price">₹ {{ p.price }}</p>
+      <p class="quantity">{{ p.quantity }}</p>
+
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+  {% endfor %}
+</div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="containersss">
+        <!-- Left Banner -->
+       <div class="banner">
+           <div class="product-container">
+  {% for p in productsed %}
+    <div class="product-card">
+      <img src="{{ p.image.url }}" alt="{{ p.title }}">
+      <h4 class="product-title">{{ p.title }}</h4>
+
+      <!-- Star rating -->
+      <div class="stars">
+        {% for i in "12345" %}
+          {% if forloop.counter <= p.rating %}
+            <span class="star filled">★</span>
+          {% else %}
+            <span class="star empty">★</span>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <p class="price">₹ {{ p.price }}</p>
+      <p class="quantity">{{ p.quantity }}</p>
+
+      <button class="add-to-cart">Add to Cart</button>
+    </div>
+  {% endfor %}
+</div>
+
+       </div>      
+
+       
+
+
+
+
+      <div class="products" aria-label="product carousel">
+      <!-- Left arrow (hidden initially) -->
+      <button id="arrow-left" class="arrow left" aria-label="previous" style="display:none">
+        &#10094;
+      </button>
+
+      <!-- viewport that clips the sliding area only -->
+      <div class="carousel-viewport">
+        <div id="carousel" class="carousel">
+          {% for p in products %}
+            <div class="product-card">
+              <img src="{{ p.image.url }}" alt="{{ p.title }}">
+              <p class="title">{{ p.title }}</p>
+              <div class="stars">
+                {% for i in "12345" %}
+                  {% if forloop.counter <= p.rating %}
+                    <span class="star-filled">★</span>
+                  {% else %}
+                    <span class="star-empty">★</span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+              <p class="price">₹ {{ p.price }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Right arrow (visible initially) -->
+      <button id="arrow-right" class="arrow right" aria-label="next">
+        &#10095;
+      </button>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const carousel = document.getElementById('carousel');
+    const leftBtn = document.getElementById('arrow-left');
+    const rightBtn = document.getElementById('arrow-right');
+    const cards = carousel.querySelectorAll('.product-card');
+
+    const total = {{ products|length }};    // injected from Django
+    const visible = 4;                      // you asked for 4 visible cards
+    const step = 2;                         // jump 1–4 -> 3–6 (step=2)
+
+    if (!cards.length) {
+      leftBtn.style.display = rightBtn.style.display = 'none';
+      return;
+    }
+
+    let position = 0; // index of the first visible card (0-based)
+
+    function getGapPx() {
+      // flex gap (modern browsers)
+      const gap = getComputedStyle(carousel).gap;
+      return gap ? parseFloat(gap) : 0;
+    }
+
+    function computeShiftPx() {
+      // card width (including padding/border) + gap
+      const firstCard = cards[0];
+      const cardWidth = firstCard.getBoundingClientRect().width;
+      const gap = getGapPx();
+      return position * (cardWidth + gap);
+    }
+
+    function applyTransform() {
+      const shiftPx = computeShiftPx();
+      carousel.style.transform = `translateX(-${shiftPx}px)`;
+    }
+
+    function updateArrows() {
+      if (total <= visible) {
+        leftBtn.style.display = rightBtn.style.display = 'none';
+        return;
+      }
+      if (position === 0) {
+        // start: only show right arrow (to move forward)
+        rightBtn.style.display = 'flex';
+        leftBtn.style.display = 'none';
+      } else if (position >= total - visible) {
+        // end: only show left arrow (to go back)
+        rightBtn.style.display = 'none';
+        leftBtn.style.display = 'flex';
+      } else {
+        // middle (if any): show both (optional) — change to only one if you want
+        rightBtn.style.display = 'flex';
+        leftBtn.style.display = 'flex';
+      }
+    }
+
+    rightBtn.addEventListener('click', function () {
+      position = Math.min(position + step, total - visible);
+      applyTransform();
+      updateArrows();
+    });
+
+    leftBtn.addEventListener('click', function () {
+      position = Math.max(position - step, 0);
+      applyTransform();
+      updateArrows();
+    });
+
+    // Recompute on resize so cards stay aligned
+    window.addEventListener('resize', function () {
+      applyTransform();
+    });
+
+    // initial layout
+    updateArrows();
+    applyTransform();
+  });
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+</body>
+</html>
+
+
+

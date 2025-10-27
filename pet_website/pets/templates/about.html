@@ -1,0 +1,233 @@
+ {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+     .background {
+            background: url("{% if background %}{{ background.image.url }}{% else %}{% static 'default-bg.png' %}{% endif %}") no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 700px;
+            color: white;
+            text-align: center;
+        }
+
+        .background-content {
+            margin-top: 400px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px 10px;
+            border-radius: 20px;
+            width: 800px;
+        }
+
+        .background-content h2 {
+            font-size: 34px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .background-content p {
+            font-size: 22px;
+            line-height: 1.1;
+            font-weight: bold;
+            text-align: center;
+        }
+
+
+        .about-section {
+    background-color: #98fb98; /* light green */
+    padding: 50px 15px;
+    min-height: 50vh;
+}
+
+.about-title {
+    font-weight: 700;
+   
+    font-size: 22px;
+    color: black;
+   
+}
+
+.about-content {
+    font-size: 1rem;
+    line-height: 1.3;
+    color: black;
+    font-weight: 500;
+    letter-spacing: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .about-content {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-title {
+        font-size: 1.5rem;
+    }
+    .about-content {
+        font-size: 0.95rem;
+    }
+}
+
+
+ .card-custom {
+            border: 1px solid black;
+            border-radius: 24px;
+           
+            
+            text-align: center;
+            padding: 0;
+        }
+        .card-custom img {
+            width: 80%;
+            height: 230px;
+            object-fit: cover;
+            
+            padding: 10px;
+        }
+        .card-custom-btn {
+            width: 60%;
+            margin: 18px auto 16px auto;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 16px;
+            padding: 10px;
+            background: #1c57f8;
+            color: #fff;
+            border: 1px solid black;
+        }
+        @media (max-width: 900px) {
+            .d-flex {
+                flex-direction: column !important;
+            }
+            .card-custom {
+                margin-bottom: 1.5rem;
+                max-width: 100%;
+            }
+        }
+.highlight-row {
+            display: flex;
+            align-items: stretch;
+            min-height: 310px;
+            
+        }
+        .highlight-content {
+            background: #98fb98;
+            flex: 1 1 0;
+            display: flex;
+            align-items: center;
+           gap: 20px !important;
+           padding: 20px;
+        }
+        .highlight-text {
+            width: 100%;
+            font-size: 1rem;
+            color: #222;
+            font-weight: bold;
+           
+        }
+        .highlight-img {
+            flex: 1 1 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+        .highlight-img img {
+            width: 98%;
+            max-width: 700px;
+            height: 320px !important;
+            height: auto;
+           
+            object-fit: cover;
+        }
+        @media (max-width: 900px) {
+            .highlight-row {
+                flex-direction: column;
+                min-height: auto;
+            }
+            .highlight-content, .highlight-img {
+                padding: 1.2rem 0.5rem;
+            }
+            .highlight-img img {
+                max-width: 100%;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+<p>
+  <b><a href="{% url 'home' %}" style="color: black;">Home</a></b> / About
+</p>
+
+<div class="background">
+    <div class="background-content">
+        <h2>{{ background.title }}</h2>
+        <p>{{ background.description }}</p>
+    </div>
+</div>
+
+
+ <section class="about-section d-flex justify-content-center align-items-center">
+        <div class="container text-center">
+            <h2 class="about-title">{{ aboutcontent.title }}</h2>
+            <p class="about-content">{{ aboutcontent.content }}</p>
+        </div>
+    </section>
+
+
+
+    <div class="container mt-5">
+    <div class="d-flex justify-content-between" style="gap: 32px;">
+        {% for card in cards %}
+        <div class="card-custom flex-fill" style="max-width: 32%;">
+            <img src="{{ card.image.url }}" alt="{{ card.title }}">
+            <button class="card-custom-btn">{{ card.title }}</button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid mt-3">
+    <div class="highlight-row">
+        <div class="highlight-content">
+            <div class="highlight-text">
+                <strong>10 Reasons to Love #LifeAtPetSmart</strong><br>
+                Since 2020, we’ve committed over $250 million to increased wages and benefits to help ensure the health, safety, and well-being of associates. Our associates come to PetSmart because they love pets, and we want them to stay because they feel a deep sense of belonging and support in building a future for themselves here. Here are just ten reasons why #LifeAtPetSmart is so doggone great!
+            </div>
+        </div>
+        <div class="highlight-img">
+            {% if image_obj %}
+                <img src="{{ image_obj.image.url }}" alt="PetSmart Highlight">
+            {% else %}
+                <img src="{% static 'default.jpg' %}" alt="Default Highlight">
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+</body>
+</html>
+
+{% endblock %}

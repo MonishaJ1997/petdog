@@ -1,0 +1,105 @@
+ 
+  {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+   
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+ breadcrumb {
+      margin: 20px;
+      font-size: 15px;
+    }
+
+    .breadcrumb .active {
+      color: #6c757d;
+    }
+
+    .thankyou-box {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #90ee90; /* light green */
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .thankyou-box h2 {
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .thankyou-box p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .thankyou-box .billing {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .thankyou-box .billing strong {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .thankyou-box .btn-back {
+      margin-top: 25px;
+      padding: 10px 30px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .btn{
+      background-color:#1c57f8;
+      border-radius:10px;
+      width:100px;
+      color: white;
+    }
+    .btn:hover{
+      background-color: #98f698;
+      color: black;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+ 
+ 
+
+ <nav aria-label="breadcrumb" style="color: black;">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="#">Dog</a></li>
+      <li class="breadcrumb-item"><a href="#">Turkey, Chickpea & Sweet Potato | Small Breed 2Kg</a></li>
+      <li class="breadcrumb-item"><a href="#">Cart</a></li>
+      <li class="breadcrumb-item"><a href="#">Checkout</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Order Completion</li>
+    </ol>
+  </nav>
+
+  <!-- Thank You Card -->
+  <div class="thankyou-box">
+    <h2>Thank you for your purchase!</h2>
+    <p>Your order will be processed within 24 hours during working days. 
+      We will notify you by email once your order has been shipped.</p>
+
+    <div class="billing">
+      <strong>Billing address</strong>
+      <p><b>Name:</b> Priya</p>
+      <p><b>Address:</b> 23/56, east street, chennai 627800</p>
+      <p><b>Phone:</b> 1234567890</p>
+      <p><b>Email:</b> name@gmail.com</p>
+    </div>
+
+    <button class="btn btn-back">Back</button>
+  </div>
+</body>
+</html>
+{% endblock %}
